@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en" class="dark">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+  <meta name="theme-color" content="#10B981" />
+  <meta name="color-scheme" content="dark light" />
+
+  <!-- SEO Meta Tags -->
+  <title>MuscleRise - Your Ultimate Fitness Journey Starts Here</title>
+  <meta name="description"
+    content="MuscleRise - Track your workouts, earn coins, compete with others and achieve your fitness goals. Join thousands of users on their fitness journey with our interactive workout tracking app." />
+  <meta name="keywords"
+    content="fitness, workout tracker, exercise, muscle building, fitness app, health, training, gym, calories, strength training" />
+  <meta name="author" content="Lakodros" />
+  <meta name="robots" content="index, follow" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="MuscleRise - Your Ultimate Fitness Journey" />
+  <meta property="og:description"
+    content="Track workouts, earn coins, and compete with others in the ultimate fitness tracking experience." />
+  <meta property="og:image" content="/og-image.jpg" />
+  <meta property="og:url" content="https://musclerise.app" />
+  <meta property="og:site_name" content="MuscleRise" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="MuscleRise - Your Ultimate Fitness Journey" />
+  <meta name="twitter:description"
+    content="Track workouts, earn coins, and compete with others in the ultimate fitness tracking experience." />
+  <meta name="twitter:image" content="/twitter-image.jpg" />
+
+  <!-- App Icons - removed until icons are added -->
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3e%3ccircle cx='50' cy='50' r='40' fill='%2310B981'/%3e%3ctext x='50' y='58' text-anchor='middle' fill='white' font-size='24' font-weight='bold'%3eMR%3c/text%3e%3c/svg%3e" />
+  <link rel="manifest" href="/manifest.json" />
+
+  <!-- Performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+
+  <!-- PWA -->
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="MuscleRise" />
+</head>
+
+<body>
+  <div id="root"></div>
+
+  <script type="module" src="/client/App.tsx"></script>
+
+  <!-- Service Worker Registration -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+          .then(registration => {
+            console.log('SW registered: ', registration);
+          })
+          .catch(registrationError => {
+            console.log('SW registration failed: ', registrationError);
+          });
+      });
+    }
+  </script>
+</body>
+
+</html>

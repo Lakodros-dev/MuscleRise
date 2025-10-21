@@ -1,0 +1,23 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://musclerise.app/sitemap.xml
+
+# Block unnecessary files
+Disallow: /client/
+Disallow: /server/
+Disallow: /dist/
+Disallow: /node_modules/
+Disallow: /*.json$
+Disallow: /*.ts$
+Disallow: /*.tsx$
+
+# Allow important assets
+Allow: /favicon.ico
+Allow: /manifest.json
+Allow: /*.png$
+Allow: /*.jpg$
+Allow: /*.jpeg$
+Allow: /*.svg$
+Allow: /*.webp$

@@ -1,0 +1,219 @@
+/** @import must precede all other statements */
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+
+/* stylelint-disable-next-line at-rule-no-unknown */
+@tailwind base;
+/* stylelint-disable-next-line at-rule-no-unknown */
+@tailwind components;
+/* stylelint-disable-next-line at-rule-no-unknown */
+@tailwind utilities;
+
+@layer base {
+  /**
+   * Tailwind CSS theme
+   * tailwind.config.ts expects the following color variables to be expressed as HSL values.
+   * A different format will require also updating the theme in tailwind.config.ts.
+  */
+  :root {
+    --background: 210 40% 98%;
+    --foreground: 222.2 84% 4.9%;
+
+    --card: 0 0% 92%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    --popover: 0 0% 92%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    --primary-rgb: 16, 185, 129; /* emerald-500 as fallback */
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --muted: 210 15% 88%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 75%;
+    --input: 214.3 31.8% 85%;
+    --ring: 222.2 84% 4.9%;
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 85%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 0 0% 3%; /* darker black */
+    --foreground: 210 40% 98%;
+
+    --card: 0 0% 8%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 0 0% 8%;
+    --popover-foreground: 210 40% 98%;
+
+    /* Primary color will be set by user preference or default */
+    --primary-rgb: 16, 185, 129; /* emerald-500 as fallback */
+    --primary-foreground: 210 40% 98%;
+    
+    /* Primary-influenced text colors */
+    --text-primary: 16, 185, 129;
+    --text-primary-light: 56, 225, 169;
+    --text-primary-dark: 0, 145, 89;
+
+    --secondary: 199 89% 48%; /* sky-500 */
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 220 9% 14%;
+    --muted-foreground: 215 20% 65%;
+
+    --accent: 199 89% 48%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 220 8% 18%;
+    --input: 220 8% 18%;
+    --ring: 166 72% 45%;
+    --sidebar-background: 0 0% 6%;
+    --sidebar-foreground: 210 40% 98%;
+    --sidebar-primary: 166 72% 45%;
+    --sidebar-primary-foreground: 210 40% 98%;
+    --sidebar-accent: 220 9% 12%;
+    --sidebar-accent-foreground: 210 40% 98%;
+    --sidebar-border: 220 8% 18%;
+    --sidebar-ring: 199 89% 48%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  /* Card backgrounds use neutral theme colors from CSS variables */
+  /* .bg-card uses --card variable from theme */
+  /* .bg-muted uses --muted variable from theme */
+  
+  /* Theme-specific card styling - subtle temperature contrast */
+  [data-theme="design-dark"] .bg-card,
+  [data-theme="design-dark"] .rounded-xl.border.bg-card {
+    background: rgba(120, 120, 130, 0.10) !important; /* neutral gray with slight blue hint */
+    border-color: rgba(120, 120, 130, 0.22) !important;
+  }
+  
+  [data-theme="design-emerald"] .bg-card,
+  [data-theme="design-emerald"] .rounded-xl.border.bg-card {
+    background: rgba(180, 120, 100, 0.06) !important; /* subtle warm hint */
+    border-color: rgba(180, 120, 100, 0.15) !important;
+  }
+  
+  [data-theme="design-sky"] .bg-card,
+  [data-theme="design-sky"] .rounded-xl.border.bg-card {
+    background: rgba(200, 150, 120, 0.07) !important; /* subtle warm hint */
+    border-color: rgba(200, 150, 120, 0.18) !important;
+  }
+  
+  [data-theme="design-white"] .bg-card,
+  [data-theme="design-white"] .rounded-xl.border.bg-card {
+    background: rgba(156, 163, 175, 0.15) !important; /* light gray */
+    border-color: rgba(156, 163, 175, 0.3) !important;
+  }
+  
+  [data-theme="bg-gradient"] .bg-card,
+  [data-theme="bg-gradient"] .rounded-xl.border.bg-card {
+    background: rgba(200, 150, 120, 0.07) !important; /* subtle warm hint */
+    border-color: rgba(200, 150, 120, 0.18) !important;
+  }
+  
+  [data-theme="bg-forest"] .bg-card,
+  [data-theme="bg-forest"] .rounded-xl.border.bg-card {
+    background: rgba(140, 120, 160, 0.06) !important; /* subtle cool hint */
+    border-color: rgba(140, 120, 160, 0.15) !important;
+  }
+  
+  /* Cards use neutral theme colors - no primary color backgrounds */
+
+  /* Remove hover effect from calories per exercise card as per specification */
+  .calories-per-exercise-card {
+    transition: none !important;
+  }
+  
+  .calories-per-exercise-card:hover {
+    background: inherit !important;
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+  }
+
+  /* style number input spinners to be transparent background and white arrows (WebKit) */
+  input[type=number]::-webkit-outer-spin-button,
+  input[type=number]::-webkit-inner-spin-button {
+    background: transparent;
+    color: white;
+    -webkit-appearance: inner-spin-button;
+    appearance: auto; /* Standard property for compatibility */
+  }
+
+  /* Firefox: hide default and use textfield appearance */
+  input[type=number] {
+    -moz-appearance: textfield;
+    appearance: textfield; /* Standard property for compatibility */
+  }
+
+  /* Page transition and performance optimization */
+  * {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-perspective: 1000;
+    perspective: 1000;
+  }
+  
+  body {
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Critical CSS for first paint */
+  .container {
+    contain: layout;
+  }
+
+  /* Optimize animations */
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
