@@ -1,11 +1,59 @@
-# 💪 MuscleRise
+# 💪 MuscleRise - Fitness Tracking Platform
 
 MuscleRise - bu zamonaviy fitness tracking web ilovasi. Foydalanuvchilar kunlik mashqlarini kuzatib borishi, coinlar to'plashi va boshqa foydalanuvchilar bilan raqobatlashishi mumkin.
 
-## 🚀 Texnologiyalar
+## 🏗️ Loyiha strukturasi
+
+Loyiha frontend va backend qismlariga ajratilgan:
+
+```
+├── backend/          # Express.js API server
+│   ├── src/          # Backend source code
+│   ├── package.json  # Backend dependencies
+│   └── README.md     # Backend documentation
+├── frontend/         # React application
+│   ├── src/          # Frontend source code
+│   ├── public/       # Static assets
+│   ├── package.json  # Frontend dependencies
+│   └── README.md     # Frontend documentation
+└── README.md         # Bu fayl
+```
+
+## 🚀 Tezkor boshlash
+
+### Talablar
+- Node.js 18+ 
+- MongoDB (local yoki Atlas)
+
+### Backend o'rnatish
+```bash
+cd backend
+npm install
+copy .env.example .env
+# .env faylida MongoDB URI va boshqa sozlamalarni kiriting
+npm run dev
+```
+
+### Frontend o'rnatish
+```bash
+cd frontend
+npm install
+copy .env.example .env
+# .env faylida backend URL ni kiriting (default: http://localhost:3001)
+npm run dev
+```
+
+## 🔧 Texnologiyalar
+
+### Backend
+- **Express.js 5** - Server framework
+- **MongoDB** - Database
+- **TypeScript** - Type safety
+- **bcrypt** - Password hashing
+- **JWT** - Authentication
+- **Zod** - Validation
 
 ### Frontend
-
 - **React 18** - UI library
 - **TypeScript** - Type safety
 - **Vite** - Build tool
@@ -14,89 +62,6 @@ MuscleRise - bu zamonaviy fitness tracking web ilovasi. Foydalanuvchilar kunlik 
 - **Framer Motion** - Animations
 - **React Router 6** - SPA routing
 - **TanStack Query** - Server state management
-- **Zod** - Validation
-
-### Backend
-
-- **Express 5** - Server framework
-- **bcrypt** - Password hashing
-- **Zod** - Input validation
-- **CORS** - Security
-
-### Dev Tools
-
-- **npm** - Package manager
-- **Vitest** - Testing
-- **Prettier** - Code formatting
-
-## 📦 O'rnatish
-
-```bash
-# Dependencies o'rnatish
-npm install
-
-# Development server ishga tushirish
-npm run dev
-
-# Production build
-npm run build
-
-# Production server
-npm run start
-
-# Type checking
-npm run typecheck
-
-# Tests
-npm run test
-```
-
-## 🔧 Konfiguratsiya
-
-`.env` faylida quyidagi o'zgaruvchilarni sozlang:
-
-```env
-# CORS allowed origins (vergul bilan ajratilgan)
-ALLOWED_ORIGINS=http://localhost:8080,http://localhost:5173
-
-# Ping message (test uchun)
-PING_MESSAGE="ping pong"
-```
-
-## 🏗️ Loyiha strukturasi
-
-```
-client/                   # React SPA frontend
-├── pages/                # Route components
-├── components/           # Reusable components
-│   ├── ui/              # UI component library
-│   ├── Layout.tsx       # Main layout
-│   ├── Avatar.tsx       # 3D avatar
-│   ├── MRNavbar.tsx     # Navigation
-│   └── Onboarding.tsx   # User registration
-├── state/               # State management
-├── hooks/               # Custom hooks
-├── lib/                 # Utilities
-└── global.css           # TailwindCSS theme
-
-server/                   # Express API backend
-├── index.ts             # Server setup
-├── routes/              # API handlers
-│   ├── auth.ts         # Authentication
-│   └── demo.ts         # Demo endpoint
-└── data/                # JSON file storage
-
-shared/                   # Shared types
-└── api.ts               # API interfaces
-```
-
-## 🔐 Xavfsizlik
-
-- ✅ **bcrypt** bilan parol hashing (10 rounds)
-- ✅ **Zod** validation barcha inputlar uchun
-- ✅ **CORS** faqat ruxsat etilgan originlar uchun
-- ✅ **TypeScript strict mode** yoqilgan
-- ✅ Password hash'lar hech qachon client'ga yuborilmaydi
 
 ## 🎯 Asosiy funksiyalar
 
@@ -109,78 +74,61 @@ shared/                   # Shared types
 - 🎨 Theme customization
 - 🛍️ Shop (skins, outfits)
 - 📱 Responsive design
+- 🔐 Admin panel
 
-## 🔄 State Management
+## 🔄 Development
 
-Loyiha React Context + useReducer pattern ishlatadi:
+1. Backend serverni ishga tushiring (port 3001)
+2. Frontend development serverni ishga tushiring (port 3000)
+3. Frontend avtomatik ravishda API so'rovlarini backend'ga yo'naltiradi
 
-- LocalStorage'da local state saqlanadi (300ms debounce)
-- Server'ga 2 sekundda bir marta sync qilinadi
-- Login qilganda server'dan data yuklanadi
+## 🚀 Deploy qilish
 
-## 🧪 Testing
+### Backend Deploy
 
-```bash
-# Barcha testlarni ishga tushirish
-npm run test
+1. **Environment Variables sozlash:**
+   ```bash
+   MONGODB_URI=your_mongodb_connection_string
+   JWT_SECRET=your_jwt_secret_key
+   PORT=3001
+   NODE_ENV=production
+   ```
 
-# Watch mode
-npm run test -- --watch
-```
+2. **Hosting xizmatlariga deploy:**
+   - Heroku, Railway, DigitalOcean, AWS, va h.k.
+   - Node.js 18+ ni qo'llab-quvvatlaydigan har qanday hosting
 
-## 📝 API Endpoints
+### Frontend Deploy
 
-### Authentication
+1. **Environment Variables sozlash:**
+   ```bash
+   # .env.production faylida
+   VITE_API_URL=https://your-backend-domain.com
+   ```
 
-- `POST /api/auth/register` - Yangi user yaratish
-- `POST /api/auth/login` - Login
-- `PATCH /api/auth/user/:id` - User ma'lumotlarini yangilash
+2. **Build va deploy:**
+   ```bash
+   cd frontend
+   npm run build
+   # dist/ papkasini static hosting ga yuklang
+   ```
 
-### Demo
+3. **Static hosting xizmatlariga:**
+   - **Netlify**: `dist/` papkasini drag & drop
+   - **Vercel**: GitHub repository ni ulang
+   - **GitHub Pages**: GitHub Actions bilan
+   - **Firebase Hosting**: `firebase deploy`
 
-- `GET /api/ping` - Server health check
-- `GET /api/demo` - Demo endpoint
+### Muhim eslatmalar:
 
-## 🎨 Theme System
-
-TailwindCSS CSS variables orqali dynamic theming:
-
-- `--primary-rgb` - Primary color (RGB format)
-- `--background` - Background color (HSL format)
-- `--foreground` - Text color (HSL format)
-
-Skinlar `client/components/Layout.tsx`da boshqariladi.
-
-## 🚀 Deployment
-
-### Standard
-
-```bash
-npm run build
-npm run start
-```
-
-### Cloud (Netlify/Vercel)
-
-Netlify yoki Vercel MCP integration orqali deploy qilish mumkin.
+- ⚠️ **VITE_API_URL** environment variable ni production da to'g'ri sozlang
+- 🔒 Backend CORS sozlamalarini frontend domain uchun ochiq qiling
+- 📱 SPA routing uchun hosting da redirect rules sozlang
+- 🔐 Production da sensitive ma'lumotlarni environment variables da saqlang
 
 ## 📄 License
 
-MIT
-
-## 👨‍💻 Development
-
-Loyiha Fusion Starter template asosida qurilgan va MuscleRise fitness app uchun moslashtirilgan.
-
-### Optimization qilingan
-
-- ✅ TypeScript strict mode
-- ✅ bcrypt password hashing
-- ✅ Zod validation
-- ✅ CORS security
-- ✅ Performance optimization (debouncing)
-- ✅ Code deduplication
-- ✅ Clean package.json
+Bu loyiha shaxsiy va mulkiy hisoblanadi.
 
 ---
 

@@ -1,0 +1,530 @@
+[
+  {
+    "id": "4b5e9eee-b076-46c6-b647-235f458cf91e",
+    "username": "testuser",
+    "passwordHash": "$2b$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewdBPj/RK.PmvAu.",
+    "weightKg": 68,
+    "heightCm": 170,
+    "avatarUrl": null,
+    "musclesLevel": 1,
+    "coins": 89,
+    "name": "Test User",
+    "customExercises": [],
+    "todayCalories": 0,
+    "todayExercises": 0,
+    "planId": "hardcore",
+    "themeSkin": "default",
+    "themeUnlockedSkins": [
+      "default",
+      "design-dark"
+    ],
+    "themeOutfitsUnlocked": [],
+    "themePrimaryChoicesOwned": [],
+    "themeWhiteThemeEnabled": false,
+    "themeMuscleBoostEnabled": false,
+    "customPrimaryColor": null,
+    "customPlanName": null,
+    "dailyHistory": [
+      {
+        "date": "2025-10-11",
+        "calories": 88.5,
+        "exercisesCompleted": 170
+      }
+    ],
+    "dateWorkoutDataMap": {
+      "2025-10-11": {
+        "planId": "middle",
+        "plans": [
+          {
+            "id": "beginner",
+            "name": "Beginner Level",
+            "exercises": [
+              {
+                "id": "pushups",
+                "name": "Push-ups",
+                "caloriesPerRep": 0.5,
+                "targetReps": 10,
+                "completedReps": 0
+              },
+              {
+                "id": "squats",
+                "name": "Squats",
+                "caloriesPerRep": 0.4,
+                "targetReps": 15,
+                "completedReps": 0
+              },
+              {
+                "id": "plank",
+                "name": "Plank (sec)",
+                "caloriesPerRep": 0.2,
+                "targetReps": 30,
+                "completedReps": 0
+              },
+              {
+                "id": "wall-sits",
+                "name": "Wall Sits (sec)",
+                "caloriesPerRep": 0.3,
+                "targetReps": 20,
+                "completedReps": 0
+              },
+              {
+                "id": "leg-raises",
+                "name": "Leg Raises",
+                "caloriesPerRep": 0.4,
+                "targetReps": 8,
+                "completedReps": 0
+              }
+            ]
+          },
+          {
+            "id": "middle",
+            "name": "Middle Level",
+            "exercises": [
+              {
+                "id": "pushups",
+                "name": "Push-ups",
+                "caloriesPerRep": 0.6,
+                "targetReps": 25,
+                "completedReps": 25
+              },
+              {
+                "id": "squats",
+                "name": "Squats",
+                "caloriesPerRep": 0.5,
+                "targetReps": 35,
+                "completedReps": 35
+              },
+              {
+                "id": "lunges",
+                "name": "Lunges",
+                "caloriesPerRep": 0.7,
+                "targetReps": 20,
+                "completedReps": 20
+              },
+              {
+                "id": "mountain-climbers",
+                "name": "Mountain Climbers",
+                "caloriesPerRep": 0.8,
+                "targetReps": 30,
+                "completedReps": 30
+              },
+              {
+                "id": "plank",
+                "name": "Plank (sec)",
+                "caloriesPerRep": 0.3,
+                "targetReps": 60,
+                "completedReps": 60
+              },
+              {
+                "id": "jumping-jacks",
+                "name": "Jumping Jacks",
+                "caloriesPerRep": 0.3,
+                "targetReps": 50,
+                "completedReps": 0
+              },
+              {
+                "id": "russian-twists",
+                "name": "Russian Twists",
+                "caloriesPerRep": 0.4,
+                "targetReps": 25,
+                "completedReps": 0
+              }
+            ]
+          },
+          {
+            "id": "hardcore",
+            "name": "Hardcore Level",
+            "exercises": [
+              {
+                "id": "burpees",
+                "name": "Burpees",
+                "caloriesPerRep": 1.2,
+                "targetReps": 20,
+                "completedReps": 0
+              },
+              {
+                "id": "diamond-pushups",
+                "name": "Diamond Push-ups",
+                "caloriesPerRep": 0.9,
+                "targetReps": 15,
+                "completedReps": 0
+              },
+              {
+                "id": "jump-squats",
+                "name": "Jump Squats",
+                "caloriesPerRep": 0.8,
+                "targetReps": 25,
+                "completedReps": 0
+              },
+              {
+                "id": "pike-pushups",
+                "name": "Pike Push-ups",
+                "caloriesPerRep": 0.8,
+                "targetReps": 12,
+                "completedReps": 0
+              },
+              {
+                "id": "bear-crawls",
+                "name": "Bear Crawls",
+                "caloriesPerRep": 1,
+                "targetReps": 20,
+                "completedReps": 0
+              },
+              {
+                "id": "single-leg-glute-bridge",
+                "name": "Single Leg Glute Bridge",
+                "caloriesPerRep": 0.6,
+                "targetReps": 15,
+                "completedReps": 0
+              },
+              {
+                "id": "bicycle-crunches",
+                "name": "Bicycle Crunches",
+                "caloriesPerRep": 0.5,
+                "targetReps": 40,
+                "completedReps": 0
+              },
+              {
+                "id": "high-knees",
+                "name": "High Knees",
+                "caloriesPerRep": 0.7,
+                "targetReps": 50,
+                "completedReps": 0
+              }
+            ]
+          }
+        ]
+      },
+      "2025-10-12": {
+        "planId": "hardcore",
+        "plans": [
+          {
+            "id": "beginner",
+            "name": "Beginner Level",
+            "exercises": [
+              {
+                "id": "pushups",
+                "name": "Push-ups",
+                "caloriesPerRep": 0.5,
+                "targetReps": 10,
+                "completedReps": 0
+              },
+              {
+                "id": "squats",
+                "name": "Squats",
+                "caloriesPerRep": 0.4,
+                "targetReps": 15,
+                "completedReps": 0
+              },
+              {
+                "id": "plank",
+                "name": "Plank (sec)",
+                "caloriesPerRep": 0.2,
+                "targetReps": 30,
+                "completedReps": 0
+              },
+              {
+                "id": "wall-sits",
+                "name": "Wall Sits (sec)",
+                "caloriesPerRep": 0.3,
+                "targetReps": 20,
+                "completedReps": 0
+              },
+              {
+                "id": "leg-raises",
+                "name": "Leg Raises",
+                "caloriesPerRep": 0.4,
+                "targetReps": 8,
+                "completedReps": 0
+              }
+            ]
+          },
+          {
+            "id": "middle",
+            "name": "Middle Level",
+            "exercises": [
+              {
+                "id": "pushups",
+                "name": "Push-ups",
+                "caloriesPerRep": 0.6,
+                "targetReps": 25,
+                "completedReps": 0
+              },
+              {
+                "id": "squats",
+                "name": "Squats",
+                "caloriesPerRep": 0.5,
+                "targetReps": 35,
+                "completedReps": 0
+              },
+              {
+                "id": "lunges",
+                "name": "Lunges",
+                "caloriesPerRep": 0.7,
+                "targetReps": 20,
+                "completedReps": 0
+              },
+              {
+                "id": "mountain-climbers",
+                "name": "Mountain Climbers",
+                "caloriesPerRep": 0.8,
+                "targetReps": 30,
+                "completedReps": 0
+              },
+              {
+                "id": "plank",
+                "name": "Plank (sec)",
+                "caloriesPerRep": 0.3,
+                "targetReps": 60,
+                "completedReps": 0
+              },
+              {
+                "id": "jumping-jacks",
+                "name": "Jumping Jacks",
+                "caloriesPerRep": 0.3,
+                "targetReps": 50,
+                "completedReps": 0
+              },
+              {
+                "id": "russian-twists",
+                "name": "Russian Twists",
+                "caloriesPerRep": 0.4,
+                "targetReps": 25,
+                "completedReps": 0
+              }
+            ]
+          },
+          {
+            "id": "hardcore",
+            "name": "Hardcore Level",
+            "exercises": [
+              {
+                "id": "burpees",
+                "name": "Burpees",
+                "caloriesPerRep": 1.2,
+                "targetReps": 20,
+                "completedReps": 0
+              },
+              {
+                "id": "diamond-pushups",
+                "name": "Diamond Push-ups",
+                "caloriesPerRep": 0.9,
+                "targetReps": 15,
+                "completedReps": 0
+              },
+              {
+                "id": "jump-squats",
+                "name": "Jump Squats",
+                "caloriesPerRep": 0.8,
+                "targetReps": 25,
+                "completedReps": 0
+              },
+              {
+                "id": "pike-pushups",
+                "name": "Pike Push-ups",
+                "caloriesPerRep": 0.8,
+                "targetReps": 12,
+                "completedReps": 0
+              },
+              {
+                "id": "bear-crawls",
+                "name": "Bear Crawls",
+                "caloriesPerRep": 1,
+                "targetReps": 20,
+                "completedReps": 0
+              },
+              {
+                "id": "single-leg-glute-bridge",
+                "name": "Single Leg Glute Bridge",
+                "caloriesPerRep": 0.6,
+                "targetReps": 15,
+                "completedReps": 0
+              },
+              {
+                "id": "bicycle-crunches",
+                "name": "Bicycle Crunches",
+                "caloriesPerRep": 0.5,
+                "targetReps": 40,
+                "completedReps": 0
+              },
+              {
+                "id": "high-knees",
+                "name": "High Knees",
+                "caloriesPerRep": 0.7,
+                "targetReps": 50,
+                "completedReps": 0
+              }
+            ]
+          }
+        ]
+      },
+      "2025-10-13": {
+        "planId": "beginner",
+        "plans": [
+          {
+            "id": "beginner",
+            "name": "Beginner Level",
+            "exercises": [
+              {
+                "id": "pushups",
+                "name": "Push-ups",
+                "caloriesPerRep": 0.5,
+                "targetReps": 10,
+                "completedReps": 0
+              },
+              {
+                "id": "squats",
+                "name": "Squats",
+                "caloriesPerRep": 0.4,
+                "targetReps": 15,
+                "completedReps": 0
+              },
+              {
+                "id": "plank",
+                "name": "Plank (sec)",
+                "caloriesPerRep": 0.2,
+                "targetReps": 30,
+                "completedReps": 0
+              },
+              {
+                "id": "wall-sits",
+                "name": "Wall Sits (sec)",
+                "caloriesPerRep": 0.3,
+                "targetReps": 20,
+                "completedReps": 0
+              },
+              {
+                "id": "leg-raises",
+                "name": "Leg Raises",
+                "caloriesPerRep": 0.4,
+                "targetReps": 8,
+                "completedReps": 0
+              }
+            ]
+          },
+          {
+            "id": "middle",
+            "name": "Middle Level",
+            "exercises": [
+              {
+                "id": "pushups",
+                "name": "Push-ups",
+                "caloriesPerRep": 0.6,
+                "targetReps": 25,
+                "completedReps": 0
+              },
+              {
+                "id": "squats",
+                "name": "Squats",
+                "caloriesPerRep": 0.5,
+                "targetReps": 35,
+                "completedReps": 0
+              },
+              {
+                "id": "lunges",
+                "name": "Lunges",
+                "caloriesPerRep": 0.7,
+                "targetReps": 20,
+                "completedReps": 0
+              },
+              {
+                "id": "mountain-climbers",
+                "name": "Mountain Climbers",
+                "caloriesPerRep": 0.8,
+                "targetReps": 30,
+                "completedReps": 0
+              },
+              {
+                "id": "plank",
+                "name": "Plank (sec)",
+                "caloriesPerRep": 0.3,
+                "targetReps": 60,
+                "completedReps": 0
+              },
+              {
+                "id": "jumping-jacks",
+                "name": "Jumping Jacks",
+                "caloriesPerRep": 0.3,
+                "targetReps": 50,
+                "completedReps": 0
+              },
+              {
+                "id": "russian-twists",
+                "name": "Russian Twists",
+                "caloriesPerRep": 0.4,
+                "targetReps": 25,
+                "completedReps": 0
+              }
+            ]
+          },
+          {
+            "id": "hardcore",
+            "name": "Hardcore Level",
+            "exercises": [
+              {
+                "id": "burpees",
+                "name": "Burpees",
+                "caloriesPerRep": 1.2,
+                "targetReps": 20,
+                "completedReps": 0
+              },
+              {
+                "id": "diamond-pushups",
+                "name": "Diamond Push-ups",
+                "caloriesPerRep": 0.9,
+                "targetReps": 15,
+                "completedReps": 0
+              },
+              {
+                "id": "jump-squats",
+                "name": "Jump Squats",
+                "caloriesPerRep": 0.8,
+                "targetReps": 25,
+                "completedReps": 0
+              },
+              {
+                "id": "pike-pushups",
+                "name": "Pike Push-ups",
+                "caloriesPerRep": 0.8,
+                "targetReps": 12,
+                "completedReps": 0
+              },
+              {
+                "id": "bear-crawls",
+                "name": "Bear Crawls",
+                "caloriesPerRep": 1,
+                "targetReps": 20,
+                "completedReps": 0
+              },
+              {
+                "id": "single-leg-glute-bridge",
+                "name": "Single Leg Glute Bridge",
+                "caloriesPerRep": 0.6,
+                "targetReps": 15,
+                "completedReps": 0
+              },
+              {
+                "id": "bicycle-crunches",
+                "name": "Bicycle Crunches",
+                "caloriesPerRep": 0.5,
+                "targetReps": 40,
+                "completedReps": 0
+              },
+              {
+                "id": "high-knees",
+                "name": "High Knees",
+                "caloriesPerRep": 0.7,
+                "targetReps": 50,
+                "completedReps": 0
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "selectedExercises": [],
+    "passwordChangedAt": "2024-01-01T00:00:00.000Z",
+    "lastLoginAt": "2024-01-01T00:00:00.000Z",
+    "loginAttempts": 0
+  }
+]
