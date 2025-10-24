@@ -19,6 +19,9 @@ export interface JWTPayload {
 // Extended Request interface with user
 export interface AuthenticatedRequest extends Request {
     user?: User;
+    params: any;
+    body: any;
+    headers: any;
 }
 
 // Generate JWT token

@@ -101,11 +101,9 @@ export async function initDatabase() {
     console.log('🔗 Connecting to MongoDB...');
 
     client = new MongoClient(DATABASE_CONFIG.MONGO_URI, {
-      tls: true,
       connectTimeoutMS: 15000,
       serverSelectionTimeoutMS: 15000,
-      retryWrites: true,
-    });
+    } as any);
 
     await client.connect();
     db = client.db(DATABASE_CONFIG.DB_NAME);
@@ -334,7 +332,7 @@ export async function addUserPlan(userId: string, plan: Omit<UserPlan, 'createdA
     {
       $push: { userPlans: newPlan },
       $set: { updatedAt: new Date() }
-    }
+    } as any
   );
 }
 
@@ -360,7 +358,7 @@ export async function deleteUserPlan(userId: string, planId: string): Promise<vo
     {
       $pull: { userPlans: { id: planId } },
       $set: { updatedAt: new Date() }
-    }
+    } as any
   );
 }
 

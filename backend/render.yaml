@@ -2,13 +2,15 @@ services:
   - type: web
     name: musclerise-backend
     env: node
-    buildCommand: npm install && npm run build
+    buildCommand: npm run build:render
     startCommand: npm start
     envVars:
       - key: NODE_ENV
         value: production
       - key: PORT
         value: 10000
+      - key: NODE_VERSION
+        value: "18"
     # Environment variables to be set in Render dashboard:
     # MONGODB_URI
     # JWT_SECRET
