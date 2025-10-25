@@ -24,9 +24,6 @@
             "ES2022",
             "DOM"
         ],
-        "typeRoots": [
-            "./src/types",
-        ],
         "types": ["node"],
         "declaration": true,
         "declarationMap": true,
