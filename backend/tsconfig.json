@@ -24,7 +24,9 @@
             "ES2022",
             "DOM"
         ],
-        "types": ["node"],
+        "types": [
+            "node"
+        ],
         "declaration": true,
         "declarationMap": true,
         "sourceMap": true

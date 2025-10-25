@@ -26,7 +26,7 @@ declare module 'path' {
 }
 
 declare module 'fs/promises' {
-    export function readFile(path: string, encoding?: string): Promise<string | Buffer>;
+    export function readFile(path: string, encoding?: string): Promise<string>;
     export function writeFile(path: string, data: string | Buffer): Promise<void>;
     export function mkdir(path: string, options?: any): Promise<void>;
     export function readdir(path: string): Promise<string[]>;
@@ -40,7 +40,7 @@ declare module 'url' {
 }
 
 declare module 'dns' {
-    export function lookup(hostname: string, callback: (err: any, address: string, family: number) => void): void;
+    export function lookup(hostname: string, options?: any, callback?: (err: any, address: string, family: number) => void): void;
     export function resolve(hostname: string, callback: (err: any, addresses: string[]) => void): void;
 }
 
