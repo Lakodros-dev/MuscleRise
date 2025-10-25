@@ -21,15 +21,16 @@
         "lib": [
             "ES2022"
         ],
-        "types": [
-            "node"
+        "typeRoots": [
+            "./node_modules/@types"
         ],
         "declaration": true,
         "declarationMap": true,
         "sourceMap": true
     },
     "include": [
-        "src/**/*"
+        "src/**/*",
+        "src/types/global.d.ts"
     ],
     "exclude": [
         "node_modules",
