@@ -41,14 +41,7 @@ declare module '@shared/api' {
     export const API_ENDPOINTS: any;
 }
 
-interface ImportMeta {
-    url: string;
-    dirname?: string;
-}
-
-export { };
-// Mo
-ngoDB types
+// MongoDB types
 declare module 'mongodb' {
     export interface MongoClientOptions {
         tls?: boolean;
@@ -59,3 +52,10 @@ declare module 'mongodb' {
         [key: string]: any;
     }
 }
+
+interface ImportMeta {
+    url: string;
+    dirname?: string;
+}
+
+export { };
