@@ -12,7 +12,7 @@
         "noUnusedParameters": false,
         "noImplicitAny": false,
         "noFallthroughCasesInSwitch": true,
-        "skipLibCheck": false,
+        "skipLibCheck": true,
         "esModuleInterop": true,
         "allowSyntheticDefaultImports": true,
         "allowJs": true,
@@ -28,9 +28,7 @@
             "node_modules/@types",
             "./src/types"
         ],
-        "types": [
-            "node"
-        ],
+        "types": ["node"],
         "declaration": true,
         "declarationMap": true,
         "sourceMap": true
