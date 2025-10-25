@@ -25,7 +25,7 @@
             "DOM"
         ],
         "typeRoots": [
-            "./node_modules/@types",
+            "node_modules/@types",
             "./src/types"
         ],
         "types": [
