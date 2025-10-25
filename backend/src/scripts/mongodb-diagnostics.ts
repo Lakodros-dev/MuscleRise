@@ -46,7 +46,7 @@ async function runDiagnostics() {
     console.log(`\n3. DNS Resolution Test`);
     try {
       console.log(`   Resolving ${hostname}...`);
-      const addresses = await resolve4(hostname, {}, () => { });
+      const addresses = await (resolve4 as any)(hostname);
       console.log(`   ✅ DNS Resolution Successful: ${addresses.join(', ')}`);
     } catch (dnsError: any) {
       console.log(`   ❌ DNS Resolution Failed: ${dnsError.message}`);
