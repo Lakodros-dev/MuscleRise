@@ -21,7 +21,8 @@
         "outDir": "./dist",
         "rootDir": "./src",
         "lib": [
-            "ES2022"
+            "ES2022",
+            "DOM"
         ],
         "typeRoots": [
             "./node_modules/@types",
