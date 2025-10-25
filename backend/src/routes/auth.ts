@@ -58,7 +58,7 @@ authRouter.post('/auth/register', async (req: Request, res: Response) => {
     const validatedData = registerSchema.parse(req.body);
 
     // Register user
-    const { user, token } = await registerUser(validatedData);
+    const { user, token } = await registerUser(validatedData as any);
 
     // Remove sensitive data from response
     const { passwordHash, ...userResponse } = user;
@@ -198,7 +198,7 @@ authRouter.patch('/auth/user/:id', authenticateToken, async (req: AuthenticatedR
     }
 
     // Update user in database
-    await updateUser(id, updates);
+    await updateUser(id, updates as any);
 
     // Get updated user data
     const updatedUser = await findUserById(id);
@@ -363,7 +363,7 @@ authRouter.post('/auth/user/:id/plans', authenticateToken, async (req: Authentic
     await addUserPlan(id, {
       id: planId,
       name,
-      exercises,
+      exercises: exercises as any,
       isCustom: true,
     });
 

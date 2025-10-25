@@ -73,7 +73,7 @@ workoutRouter.post('/workouts/complete', authenticateToken, async (req: Authenti
         const workoutEntry: WorkoutHistoryEntry = {
             id: `workout_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
             date: new Date().toISOString(),
-            exercises: workoutData.exercises,
+            exercises: workoutData.exercises as any,
             totalCalories,
             duration: workoutData.duration,
             planId: workoutData.planId,
