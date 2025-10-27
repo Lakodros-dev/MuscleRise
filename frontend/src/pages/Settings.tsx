@@ -131,9 +131,9 @@ const Settings = memo(function Settings() {
     localStorage.removeItem('authToken');
     localStorage.removeItem('mr_app_state_v1');
 
-    // Force a page reload to ensure clean state
+    // Navigate to home page and show auth modal
     setTimeout(() => {
-      window.location.reload();
+      window.location.href = '/';
     }, 100);
   }, [dispatch]);
 

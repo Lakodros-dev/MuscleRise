@@ -87,7 +87,7 @@ export default memo(function Onboarding() {
               {availableExercises.map((a) => <option key={a.id} value={a.id}>{a.name} ({a.unit})</option>)}
             </select>
             <input type="number" min={1} value={qty} onChange={(e) => setQty(e.target.value)} className="w-28 rounded-md bg-black/40 border border-white/10 px-3 py-2" />
-            <button type="button" onClick={add} className="rounded-md bg-emerald-500 px-3 py-1 text-sm hover:bg-emerald-400">Add</button>
+            <button type="button" onClick={add} className="rounded-md bg-emerald-500 px-4 py-2 text-sm hover:bg-emerald-400 whitespace-nowrap">Add</button>
           </div>
 
           {localError && <div className="text-xs text-red-400">{localError}</div>}
@@ -283,7 +283,7 @@ export default memo(function Onboarding() {
               {/* Make Yourself Modal */}
               {showMakeYourself && (
                 <div className="fixed inset-0 z-[210] grid place-items-center bg-black/90 p-4">
-                  <div className="w-full max-w-lg max-h-[95vh] overflow-y-auto rounded-2xl bg-neutral-900 border border-white/10 p-6 shadow-2xl" style={{ overflowX: 'hidden' }}>
+                  <div className="w-full max-w-2xl max-h-[95vh] overflow-y-auto rounded-2xl bg-neutral-900 border border-white/10 p-6 shadow-2xl" style={{ overflowX: 'hidden' }}>
                     <h3 className="text-xl font-semibold mb-2">Make yourself — choose exercises</h3>
                     <p className="text-sm text-foreground/70 mb-4">Select up to 5 exercises and set repetitions/distances.</p>
 
