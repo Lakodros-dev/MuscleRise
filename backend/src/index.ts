@@ -15,18 +15,23 @@ export async function createServer() {
   const app = express();
 
   // Middleware - CORS with security
-  const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(",") || [
+  const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(",").map(origin => origin.trim()) || [
     "http://localhost:3000",
     "http://localhost:5173",
     "http://localhost:5174",
     "http://localhost:8080",
-    "https://localhost:3000"
+    "https://localhost:3000",
+    "https://musclerise.onrender.com",
+    "https://musclerise.netlify.app"
   ];
 
   app.use(cors({
     origin: (origin, callback) => {
+      console.log(`CORS check - Origin: ${origin}, Allowed: ${JSON.stringify(allowedOrigins)}`);
+
       // Allow requests with no origin (mobile apps, Postman, etc.) in development
       if (!origin && process.env.NODE_ENV !== 'production') {
+        console.log('CORS allowing no origin in development');
         return callback(null, true);
       }
 
@@ -37,9 +42,10 @@ export async function createServer() {
       }
 
       if (origin && allowedOrigins.includes(origin)) {
+        console.log(`CORS allowing origin: ${origin}`);
         callback(null, true);
       } else {
-        console.log(`CORS blocked origin: ${origin}`);
+        console.log(`CORS blocked origin: ${origin}, allowed origins: ${JSON.stringify(allowedOrigins)}`);
         callback(new Error("Not allowed by CORS"));
       }
     },
