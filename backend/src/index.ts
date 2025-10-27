@@ -29,19 +29,19 @@ export async function createServer() {
     origin: (origin, callback) => {
       console.log(`CORS check - Origin: ${origin}, Allowed: ${JSON.stringify(allowedOrigins)}`);
 
-      // Allow requests with no origin (mobile apps, Postman, etc.) in development
-      if (!origin && process.env.NODE_ENV !== 'production') {
-        console.log('CORS allowing no origin in development');
+      // Allow requests with no origin (mobile apps, Postman, health checks, etc.)
+      if (!origin) {
+        console.log('CORS allowing no origin (health checks, mobile apps, etc.)');
         return callback(null, true);
       }
 
       // In development, allow all localhost origins
-      if (process.env.NODE_ENV !== 'production' && origin && origin.startsWith('http://localhost:')) {
+      if (process.env.NODE_ENV !== 'production' && origin.startsWith('http://localhost:')) {
         console.log(`CORS allowing localhost origin: ${origin}`);
         return callback(null, true);
       }
 
-      if (origin && allowedOrigins.includes(origin)) {
+      if (allowedOrigins.includes(origin)) {
         console.log(`CORS allowing origin: ${origin}`);
         callback(null, true);
       } else {
