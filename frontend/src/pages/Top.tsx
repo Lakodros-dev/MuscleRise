@@ -104,69 +104,71 @@ export default function TopPage() {
   };
 
   return (
-    <Layout>
-      <div className="flex items-center justify-between mb-4">
-        <h2 className="text-xl font-semibold">{t.top.title}</h2>
-        <div className="flex items-center gap-2">
-          <button onClick={() => setMode("coins")} className={"px-3 py-1 rounded border " + (mode === "coins" ? "bg-primary text-primary-foreground border-primary" : "bg-card border-border hover:bg-muted")}>By {t.common.coins}</button>
-          <button onClick={() => setMode("activity")} className={"px-3 py-1 rounded border " + (mode === "activity" ? "bg-primary text-primary-foreground border-primary" : "bg-card border-border hover:bg-muted")}>By Activity</button>
+    <>
+      <Layout>
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-xl font-semibold">{t.top.title}</h2>
+          <div className="flex items-center gap-2">
+            <button onClick={() => setMode("coins")} className={"px-3 py-1 rounded border " + (mode === "coins" ? "bg-primary text-primary-foreground border-primary" : "bg-card border-border hover:bg-muted")}>By {t.common.coins}</button>
+            <button onClick={() => setMode("activity")} className={"px-3 py-1 rounded border " + (mode === "activity" ? "bg-primary text-primary-foreground border-primary" : "bg-card border-border hover:bg-muted")}>By Activity</button>
+          </div>
         </div>
-      </div>
 
-      {loading ? (
-        <div className="rounded-xl border border-border bg-card p-8 text-center">
-          <div className="text-foreground/70">Loading users...</div>
-        </div>
-      ) : error ? (
-        <div className="rounded-xl border border-border bg-card p-8 text-center">
-          <div className="text-red-500">{error}</div>
-        </div>
-      ) : list.length === 0 ? (
-        <div className="rounded-xl border border-border bg-card p-8 text-center">
-          <div className="text-foreground/70">No users found</div>
-        </div>
-      ) : (
-        <div className="rounded-xl border border-border bg-card divide-y divide-border relative z-0">
-          {list.map((u, idx) => {
-            const isCurrentUser = state.user?.id === u.id;
-            const displayValue = mode === "coins" ? u.coins : (u.totalExercises || u.todayExercises);
-            const displayUnit = mode === "coins" ? t.common.coins : `total ${t.common.exercises}`;
+        {loading ? (
+          <div className="rounded-xl border border-border bg-card p-8 text-center">
+            <div className="text-foreground/70">Loading users...</div>
+          </div>
+        ) : error ? (
+          <div className="rounded-xl border border-border bg-card p-8 text-center">
+            <div className="text-red-500">{error}</div>
+          </div>
+        ) : list.length === 0 ? (
+          <div className="rounded-xl border border-border bg-card p-8 text-center">
+            <div className="text-foreground/70">No users found</div>
+          </div>
+        ) : (
+          <div className="rounded-xl border border-border bg-card divide-y divide-border relative z-0">
+            {list.map((u, idx) => {
+              const isCurrentUser = state.user?.id === u.id;
+              const displayValue = mode === "coins" ? u.coins : (u.totalExercises || u.todayExercises);
+              const displayUnit = mode === "coins" ? t.common.coins : `total ${t.common.exercises}`;
 
-            return (
-              <div key={u.id} className="flex items-center justify-between p-3">
-                <div className="flex items-center gap-3">
-                  <span className="w-8 text-center font-bold">#{idx + 1}</span>
-                  <div className="flex items-center gap-2">
-                    {u.avatarUrl && (
-                      <img
-                        src={u.avatarUrl}
-                        alt={`${u.name} avatar`}
-                        className="w-8 h-8 rounded-full object-cover border border-border"
-                        onError={(e) => {
-                          (e.target as HTMLImageElement).style.display = 'none';
-                        }}
-                      />
-                    )}
-                    <div>
-                      <div className="font-medium">{u.name}{isCurrentUser ? " (You)" : ""}</div>
-                      <div className="text-xs text-foreground/70">{displayValue} {displayUnit}</div>
+              return (
+                <div key={u.id} className="flex items-center justify-between p-3">
+                  <div className="flex items-center gap-3">
+                    <span className="w-8 text-center font-bold">#{idx + 1}</span>
+                    <div className="flex items-center gap-2">
+                      {u.avatarUrl && (
+                        <img
+                          src={u.avatarUrl}
+                          alt={`${u.name} avatar`}
+                          className="w-8 h-8 rounded-full object-cover border border-border"
+                          onError={(e) => {
+                            (e.target as HTMLImageElement).style.display = 'none';
+                          }}
+                        />
+                      )}
+                      <div>
+                        <div className="font-medium">{u.name}{isCurrentUser ? " (You)" : ""}</div>
+                        <div className="text-xs text-foreground/70">{displayValue} {displayUnit}</div>
+                      </div>
                     </div>
                   </div>
+                  <button
+                    onClick={() => handleViewStats(u)}
+                    className="text-xs rounded-md border border-border px-3 py-1 bg-muted hover:bg-muted/80 transition-colors"
+                  >
+                    {t.top.viewStats}
+                  </button>
                 </div>
-                <button
-                  onClick={() => handleViewStats(u)}
-                  className="text-xs rounded-md border border-border px-3 py-1 bg-muted hover:bg-muted/80 transition-colors"
-                >
-                  {t.top.viewStats}
-                </button>
-              </div>
-            );
-          })}
-        </div>
-      )}
-      <p className="mt-3 text-xs text-foreground/60">Real-time data from server users.</p>
+              );
+            })}
+          </div>
+        )}
+        <p className="mt-3 text-xs text-foreground/60">Real-time data from server users.</p>
+      </Layout>
 
-      {/* User Stats Modal */}
+      {/* User Stats Modal - Outside Layout to appear above footer */}
       {selectedUser && (
         <div className="fixed inset-0 z-[9999] grid place-items-center bg-black/90 p-4">
           <div className="w-full max-w-md rounded-2xl bg-neutral-900 border border-white/10 p-6 shadow-2xl">
@@ -251,6 +253,6 @@ export default function TopPage() {
           </div>
         </div>
       )}
-    </Layout>
+    </>
   );
 }
