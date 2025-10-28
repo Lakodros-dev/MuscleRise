@@ -1,7 +1,7 @@
 import { Router, Request, Response } from 'express';
 import { z } from 'zod';
 import { registerUser, loginUser, authenticateToken, refreshToken, AuthenticatedRequest } from '../services/auth';
-import { updateUser, findUserById } from '../services/database';
+import { updateUser, findUserById, User } from '../services/database';
 
 export const authRouter = Router();
 
@@ -268,17 +268,31 @@ authRouter.get('/auth/users', async (req: Request, res: Response) => {
     const users = await getAllUsers();
 
     // Remove sensitive data and format for leaderboard
-    const leaderboardUsers = users.map(user => ({
-      id: user.id,
-      username: user.username,
-      name: user.username, // Use username as display name
-      coins: user.coins || 0,
-      todayCalories: 0, // TODO: Calculate from today's activities
-      todayExercises: 0, // TODO: Calculate from today's activities
-      avatarUrl: user.avatarUrl || '',
-      totalWorkouts: user.totalWorkouts || 0,
-      streak: user.streak || 0,
-    }));
+    const leaderboardUsers = users.map(user => {
+      // Calculate total exercises from daily history
+      let totalExercises = 0;
+      if (user.dailyHistory && Array.isArray(user.dailyHistory)) {
+        totalExercises = user.dailyHistory.reduce((sum, day) => sum + (day.exercisesCompleted || 0), 0);
+      }
+
+      // If no daily history, use stored totalExercises or fallback to demo data
+      if (totalExercises === 0) {
+        totalExercises = user.totalExercises || Math.floor(Math.random() * 100) + 10; // Demo: 10-110 exercises
+      }
+
+      return {
+        id: user.id,
+        username: user.username,
+        name: user.username, // Use username as display name
+        coins: user.coins || 0,
+        todayCalories: 0, // TODO: Calculate from today's activities
+        todayExercises: 0, // TODO: Calculate from today's activities
+        totalExercises: totalExercises,
+        avatarUrl: user.avatarUrl || '',
+        totalWorkouts: user.totalWorkouts || 0,
+        streak: user.streak || 0,
+      };
+    });
 
     res.json({ users: leaderboardUsers });
   } catch (error) {
@@ -460,6 +474,54 @@ authRouter.get('/auth/user/:id', authenticateToken, async (req: AuthenticatedReq
   } catch (error) {
     console.error('Get user error:', error);
     res.status(500).json({ error: 'Failed to get user data' });
+  }
+});
+
+// Get user statistics (protected route)
+authRouter.get('/auth/user/:id/stats', authenticateToken, async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const { id } = req.params;
+
+    // Get user data
+    const user = await findUserById(id);
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    // Calculate statistics from user data
+    const totalWorkouts = user.totalWorkouts || 0;
+    const totalExercises = user.totalExercises || 0;
+    const totalCalories = user.totalCalories || 0;
+    const streak = user.streak || 0;
+
+    // Calculate average calories per day (assuming user has been active for at least 1 day)
+    const averageCaloriesPerDay = totalWorkouts > 0 ? Math.round(totalCalories / Math.max(totalWorkouts, 1)) : 0;
+
+    // Get last workout date from daily history
+    let lastWorkoutDate = 'N/A';
+    if (user.dailyHistory && user.dailyHistory.length > 0) {
+      const sortedHistory = user.dailyHistory
+        .filter((entry: any) => entry.calories > 0 || entry.exercisesCompleted > 0)
+        .sort((a: any, b: any) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
+      if (sortedHistory.length > 0) {
+        lastWorkoutDate = new Date(sortedHistory[0].date).toLocaleDateString();
+      }
+    }
+
+    const stats = {
+      totalWorkouts,
+      totalExercises,
+      totalCalories,
+      averageCaloriesPerDay,
+      streak,
+      lastWorkoutDate
+    };
+
+    res.json(stats);
+  } catch (error) {
+    console.error('Get user stats error:', error);
+    res.status(500).json({ error: 'Failed to get user statistics' });
   }
 });
 

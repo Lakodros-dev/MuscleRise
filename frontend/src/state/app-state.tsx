@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useMemo, useReducer, useRef, useState } from "react";
+import React, { createContext, useEffect, useMemo, useReducer, useRef, useState } from "react";
 import { setStorageItem, getStorageItem, removeStorageItem } from "@/lib/storage-utils";
 
 export type Exercise = {
@@ -214,7 +214,7 @@ function initialState(): AppState {
   const baseState = {
     user: parsed?.user || null,
     coins: parsed?.coins || 0,
-    theme: parsed?.theme || { skin: "default", unlockedSkins: ["default", "design-dark"], outfitsUnlocked: [], primaryChoicesOwned: [], whiteThemeEnabled: false, muscleBoostEnabled: false },
+    theme: parsed?.theme || { skin: "design-dark", unlockedSkins: ["design-dark"], outfitsUnlocked: [], primaryChoicesOwned: [], whiteThemeEnabled: false, muscleBoostEnabled: false },
     workoutPlanId: todayWorkoutData.planId,
     workoutPlans: todayWorkoutData.plans,
     today: todayStats,
@@ -279,8 +279,9 @@ function reducer(state: AppState, action: Action): AppState {
 
       // Save to server if user is logged in
       if (state.user?.id) {
+        const userId = state.user.id;
         import("@/lib/api-utils").then(({ updateUser }) => {
-          updateUser(state.user.id, { planId: action.payload.planId });
+          updateUser(userId, { planId: action.payload.planId });
         }).catch(e => console.warn('Failed to save plan selection to server:', e));
       }
 
@@ -325,7 +326,7 @@ function reducer(state: AppState, action: Action): AppState {
 
       // Save workout completion to MongoDB if user is logged in
       if (state.user?.id) {
-        import("@/lib/api-utils").then(({ completeWorkout, updateUser }) => {
+        import("@/lib/api-utils").then(({ completeWorkout }) => {
           // Send workout completion to server
           completeWorkout({
             exercises: [{
@@ -338,7 +339,7 @@ function reducer(state: AppState, action: Action): AppState {
             totalCalories: addedCalories,
             planId: action.payload.planId
           }).then(response => {
-            if (response.success) {
+            if (response.success && response.data) {
               console.log('✅ Workout saved to MongoDB:', response.data);
               // Update coins from server response
               if (response.data.user) {
@@ -369,8 +370,9 @@ function reducer(state: AppState, action: Action): AppState {
 
         // Save theme purchase to server if user is logged in
         if (state.user?.id) {
+          const userId = state.user.id;
           import("@/lib/api-utils").then(({ updateUser }) => {
-            updateUser(state.user.id, {
+            updateUser(userId, {
               coins: newState.coins,
               themeSkin: action.payload.id,
               themeUnlockedSkins: unlocked,
@@ -396,8 +398,9 @@ function reducer(state: AppState, action: Action): AppState {
 
       // Save theme to server if user is logged in
       if (state.user?.id) {
+        const userId = state.user.id;
         import("@/lib/api-utils").then(({ updateUser }) => {
-          updateUser(state.user.id, {
+          updateUser(userId, {
             themeSkin: action.payload.id,
             themeUnlockedSkins: newState.theme.unlockedSkins,
             themeOutfitsUnlocked: newState.theme.outfitsUnlocked,
@@ -834,7 +837,7 @@ export function AppStateProvider({ children }: { children: React.ReactNode }) {
                 const [historyResponse, todayResponse, rankResponse] = await Promise.all([
                   getWorkoutHistory(),
                   getTodayWorkoutStats(),
-                  makeApiRequest(`/auth/user/${response.data.user.id}/rank`)
+                  makeApiRequest(`/auth/user/${response.data?.user?.id}/rank`)
                 ]);
 
                 // Update workout data
@@ -1023,8 +1026,9 @@ export function AppStateProvider({ children }: { children: React.ReactNode }) {
 
         // Also refresh rankings every 5 minutes for logged-in users
         if (state.user?.id) {
+          const userId = state.user.id;
           import("@/lib/api-utils").then(({ makeApiRequest }) => {
-            return makeApiRequest(`/auth/user/${state.user.id}/rank`);
+            return makeApiRequest(`/auth/user/${userId}/rank`);
           })
             .then(response => {
               if (response.success && response.data?.rank && isMounted) {

@@ -421,7 +421,7 @@ const Layout = memo(function Layout({ children }: { children: React.ReactNode })
       </footer>
 
       {showAdmin ? (
-        <div className="fixed inset-0 z-[200] grid place-items-center bg-black/90 p-4">
+        <div className="fixed inset-0 z-[9999] grid place-items-center bg-black/90 p-4">
           <div className="w-full max-w-5xl max-h-[90vh] overflow-y-auto rounded-xl bg-neutral-900 border border-white/10 p-6">
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-lg font-semibold">Admin Panel</h3>
@@ -732,7 +732,7 @@ const Layout = memo(function Layout({ children }: { children: React.ReactNode })
 
       {/* Admin Password Modal */}
       {showPasswordModal && (
-        <div className="fixed inset-0 z-[210] grid place-items-center bg-black/90 p-4">
+        <div className="fixed inset-0 z-[9998] grid place-items-center bg-black/90 p-4">
           <div className="w-full max-w-md rounded-xl bg-neutral-900 border border-white/10 p-6">
             <div className="flex items-center gap-2 mb-4">
               <Lock className="w-5 h-5" />
@@ -775,7 +775,7 @@ const Layout = memo(function Layout({ children }: { children: React.ReactNode })
 
       {/* Change Password Modal */}
       {showChangePassword && (
-        <div className="fixed inset-0 z-[220] grid place-items-center bg-black/90 p-4">
+        <div className="fixed inset-0 z-[9997] grid place-items-center bg-black/90 p-4">
           <div className="w-full max-w-md rounded-xl bg-neutral-900 border border-white/10 p-6">
             <div className="flex items-center gap-2 mb-4">
               <Key className="w-5 h-5" />

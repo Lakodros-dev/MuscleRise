@@ -1,7 +1,7 @@
 import Layout from "@/components/Layout";
 import { useAppState } from "@/state/app-state";
 import { useState, useEffect, memo, useCallback, useMemo } from "react";
-import { useTranslationWithState, translateThemeName, translateColorName } from "@/lib/i18n";
+import { useTranslationWithState, translateThemeName } from "@/lib/i18n";
 
 type ShopItem = {
   id: string;
@@ -97,7 +97,7 @@ const ShopPage = memo(function ShopPage() {
 
   const items = useMemo((): ShopItem[] => {
     const baseItems: ShopItem[] = [
-      { id: "design-dark", name: translateThemeName("Dark Theme", t), cost: 600, type: "skin" },
+      { id: "design-dark", name: translateThemeName("Dark Theme", t), cost: 0, type: "skin" },
       { id: "design-emerald", name: translateThemeName("Emerald Theme", t), cost: 600, type: "skin" },
       { id: "design-sky", name: translateThemeName("Sky Theme", t), cost: 600, type: "skin" },
       { id: "design-white", name: translateThemeName("White Theme", t), cost: 600, type: "skin" },
@@ -208,7 +208,7 @@ const ShopPage = memo(function ShopPage() {
         if (response.success) {
           console.log('✅ Primary color saved to server successfully:', hexColor);
         } else {
-          console.warn('❌ Failed to save primary color - server response:', response.status);
+          console.warn('❌ Failed to save primary color - server response:', response.error);
         }
       } catch (e) {
         console.warn('❌ Failed to save primary color to server:', e);
@@ -320,9 +320,11 @@ const ShopPage = memo(function ShopPage() {
               <div className="font-semibold text-foreground">{it.name}</div>
               <div className="text-xs text-foreground/70">{it.type === "muscle" ? "Increases visible muscle size" : "Site design / background"}</div>
               <div className="mt-3 flex items-center justify-between">
-                <span className="font-semibold" style={{ color: "rgb(var(--primary-rgb))" }}>{it.cost} coins</span>
+                <span className="font-semibold" style={{ color: "rgb(var(--primary-rgb))" }}>
+                  {it.cost === 0 ? t.shop.free : `${it.cost} coins`}
+                </span>
                 <div className="flex gap-2">
-                  {owned && it.type === "skin" ? (
+                  {(owned || it.cost === 0) && it.type === "skin" ? (
                     <button
                       onClick={() => {
                         if (it.id === "design-white" && !state.theme.whiteThemeEnabled) {
@@ -333,13 +335,30 @@ const ShopPage = memo(function ShopPage() {
                           dispatch({ type: "APPLY_THEME", payload: { id: it.id } });
                         }
                       }}
-                      className={`rounded-md px-3 py-1 text-sm border border-border bg-transparent hover:bg-[rgba(255,255,255,0.08)] hover:scale-105 transition-all duration-200 ${isActive ? 'cursor-not-allowed' : 'cursor-pointer'}`}
+                      className={`rounded-md px-3 py-1 text-sm border border-border bg-transparent hover:bg-[rgba(255,255,255,0.08)] hover:scale-105 transition-all duration-200 ${isActive ? 'cursor-not-allowed opacity-75' : 'cursor-pointer'}`}
                       style={{
                         color: `rgb(var(--primary-rgb))`,
                         fontWeight: isActive ? '600' : '400'
                       }}
+                      disabled={isActive}
                     >
-                      {isActive ? t.shop.apply : t.shop.purchase}
+                      {isActive ? t.shop.active : t.shop.apply}
+                    </button>
+                  ) : it.cost === 0 ? (
+                    <button
+                      onClick={() => {
+                        if (!isActive) {
+                          dispatch({ type: "APPLY_THEME", payload: { id: it.id } });
+                        }
+                      }}
+                      className={`rounded-md px-3 py-1 text-sm border border-border bg-transparent hover:bg-[rgba(255,255,255,0.08)] hover:scale-105 transition-all duration-200 ${isActive ? 'cursor-not-allowed opacity-75' : 'cursor-pointer'}`}
+                      style={{
+                        color: `rgb(var(--primary-rgb))`,
+                        fontWeight: isActive ? '600' : '400'
+                      }}
+                      disabled={isActive}
+                    >
+                      {isActive ? t.shop.active : t.shop.apply}
                     </button>
                   ) : (
                     <button
@@ -352,7 +371,7 @@ const ShopPage = memo(function ShopPage() {
                           : '#888'
                       }}
                     >
-                      Buy
+                      {t.shop.purchase}
                     </button>
                   )}
                 </div>
@@ -364,7 +383,7 @@ const ShopPage = memo(function ShopPage() {
 
       {/* "We are working on it" Modal for White Theme */}
       {showWorkingModal && (
-        <div className="fixed inset-0 z-[200] grid place-items-center bg-black/90 p-4">
+        <div className="fixed inset-0 z-[9999] grid place-items-center bg-black/90 p-4">
           <div className="w-full max-w-md rounded-xl bg-card border border-border p-6">
             <div className="text-center">
               <h4 className="font-semibold text-foreground text-lg mb-3">🚧 We are working on it! 🚧</h4>
@@ -388,8 +407,8 @@ const ShopPage = memo(function ShopPage() {
 
       {/* Custom Primary Color Modal */}
       {showColorPicker && (
-        <div className="fixed inset-0 grid place-items-center bg-black/90 p-4" style={{ zIndex: 99999 }} onClick={() => setShowColorPicker(false)}>
-          <div className="w-full max-w-md rounded-xl border border-border p-6 shadow-2xl" style={{ backgroundColor: 'hsl(var(--card))', zIndex: 100000 }} onClick={(e) => e.stopPropagation()}>
+        <div className="fixed inset-0 grid place-items-center bg-black/90 p-4 z-[9999]" onClick={() => setShowColorPicker(false)}>
+          <div className="w-full max-w-md rounded-xl border border-border p-6 shadow-2xl bg-card" onClick={(e) => e.stopPropagation()}>
             <h4 className="font-semibold text-foreground text-lg">{t.shop.colorPicker}</h4>
             <p className="text-sm text-foreground/70 mt-2">Choose your text color (cost {customCost} coins)</p>
 

@@ -119,12 +119,17 @@ workoutRouter.post('/workouts/complete', authenticateToken, async (req: Authenti
         // Update daily stats
         await updateDailyStats(req.user.id, totalCalories, workoutData.exercises.reduce((sum, ex) => sum + ex.completedReps, 0));
 
+        // Calculate total exercises completed in this workout
+        const totalExercisesInWorkout = workoutData.exercises.reduce((sum, ex) => sum + ex.completedReps, 0);
+
         // Update user data
         const updates = {
             workoutHistory,
             coins: (user.coins || 0) + coinsEarned,
             streak: newStreak,
             totalWorkouts: (user.totalWorkouts || 0) + 1,
+            totalExercises: (user.totalExercises || 0) + totalExercisesInWorkout,
+            totalCalories: (user.totalCalories || 0) + totalCalories,
             lastWorkoutDate: new Date().toISOString(),
         };
 

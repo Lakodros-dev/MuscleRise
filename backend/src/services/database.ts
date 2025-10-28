@@ -78,7 +78,10 @@ export interface User {
   coins: number;
   streak: number;
   totalWorkouts: number;
+  totalExercises?: number; // Total exercises completed
+  totalCalories?: number; // Total calories burned
   workoutHistory?: WorkoutHistoryEntry[]; // User's workout history
+  dailyHistory?: Array<{ date: string; calories: number; exercisesCompleted: number }>; // Daily history
   lastWorkoutDate?: string; // Last workout date
   dailyStats?: DailyStats; // Today's stats
   lastDailyReset?: Date; // Last time daily exercises were reset
@@ -479,6 +482,23 @@ export async function updateDailyStats(userId: string, calories: number, exercis
   dailyStats.workoutsCount += 1;
   dailyStats.lastResetAt = new Date();
 
+  // Update daily history
+  let dailyHistory = (user as any).dailyHistory || [];
+  const existingDayIndex = dailyHistory.findIndex((day: any) => day.date === todayKey);
+
+  if (existingDayIndex >= 0) {
+    // Update existing day
+    dailyHistory[existingDayIndex].calories += calories;
+    dailyHistory[existingDayIndex].exercisesCompleted += exercisesCompleted;
+  } else {
+    // Add new day
+    dailyHistory.push({
+      date: todayKey,
+      calories: calories,
+      exercisesCompleted: exercisesCompleted
+    });
+  }
+
   console.log(`📊 Updating daily stats for user ${userId}: +${calories} calories, +${exercisesCompleted} exercises`);
 
   await usersCollection.updateOne(
@@ -486,6 +506,7 @@ export async function updateDailyStats(userId: string, calories: number, exercis
     {
       $set: {
         dailyStats: dailyStats,
+        dailyHistory: dailyHistory,
         updatedAt: new Date()
       }
     }

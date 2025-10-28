@@ -344,7 +344,7 @@ const Settings = memo(function Settings() {
 
           {/* Avatar Modal */}
           {isAvatarModalOpen && (
-            <div className="fixed inset-0 bg-black/90 flex items-center justify-center z-[200] p-4">
+            <div className="fixed inset-0 bg-black/90 flex items-center justify-center z-[9999] p-4">
               <div className="bg-white dark:bg-gray-800 rounded-xl p-6 w-full max-w-md">
                 <h3 className="text-lg font-semibold mb-4">{t.settings.updateAvatar}</h3>
                 <div className="space-y-4">
@@ -536,7 +536,7 @@ const Settings = memo(function Settings() {
 
           {/* Custom Plan Modal */}
           {isCustomPlanModalOpen && (
-            <div className="fixed inset-0 bg-black/90 flex items-center justify-center z-[200] p-4">
+            <div className="fixed inset-0 bg-black/90 flex items-center justify-center z-[9999] p-4">
               <div className="bg-white dark:bg-gray-800 rounded-xl p-6 w-full max-w-md max-h-[80vh] overflow-y-auto mx-auto">
                 <h3 className="text-lg font-semibold mb-4">Create Custom Plan</h3>
 

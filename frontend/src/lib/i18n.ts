@@ -115,6 +115,8 @@ export interface Translations {
         purchase: string;
         owned: string;
         apply: string;
+        active: string;
+        free: string;
         notEnoughCoins: string;
         purchaseSuccess: string;
         applySuccess: string;
@@ -147,6 +149,16 @@ export interface Translations {
         totalCoins: string;
         streak: string;
         totalWorkouts: string;
+        totalExercises: string;
+        totalCalories: string;
+        averageCaloriesPerDay: string;
+        dayStreak: string;
+        lastWorkout: string;
+        userStatistics: string;
+        loadingStatistics: string;
+        failedToLoadStats: string;
+        close: string;
+        viewStats: string;
         noUsers: string;
     };
 
@@ -329,6 +341,8 @@ const en: Translations = {
         purchase: 'Purchase',
         owned: 'Owned',
         apply: 'Apply',
+        active: 'Active',
+        free: 'Free',
         notEnoughCoins: 'Not enough coins',
         purchaseSuccess: 'Purchase successful',
         applySuccess: 'Theme applied successfully',
@@ -359,6 +373,16 @@ const en: Translations = {
         totalCoins: 'Total Coins',
         streak: 'Streak',
         totalWorkouts: 'Total Workouts',
+        totalExercises: 'Total Exercises',
+        totalCalories: 'Total Calories',
+        averageCaloriesPerDay: 'Average Calories per Day',
+        dayStreak: 'Day Streak',
+        lastWorkout: 'Last Workout',
+        userStatistics: 'User Statistics',
+        loadingStatistics: 'Loading statistics...',
+        failedToLoadStats: 'Failed to load statistics',
+        close: 'Close',
+        viewStats: 'View stats',
         noUsers: 'No users found'
     },
     auth: {
@@ -531,6 +555,8 @@ const uz: Translations = {
         purchase: 'Sotib olish',
         owned: 'Egalik qiladi',
         apply: 'Qo\'llash',
+        active: 'Faol',
+        free: 'Bepul',
         notEnoughCoins: 'Tangalar yetarli emas',
         purchaseSuccess: 'Muvaffaqiyatli sotib olindi',
         applySuccess: 'Mavzu muvaffaqiyatli qo\'llandi',
@@ -561,6 +587,16 @@ const uz: Translations = {
         totalCoins: 'Jami tangalar',
         streak: 'Ketma-ketlik',
         totalWorkouts: 'Jami mashg\'ulotlar',
+        totalExercises: 'Jami mashqlar',
+        totalCalories: 'Jami kaloriyalar',
+        averageCaloriesPerDay: 'Kunlik o\'rtacha kaloriya',
+        dayStreak: 'Kunlik ketma-ketlik',
+        lastWorkout: 'Oxirgi mashg\'ulot',
+        userStatistics: 'Foydalanuvchi statistikasi',
+        loadingStatistics: 'Statistika yuklanmoqda...',
+        failedToLoadStats: 'Statistikani yuklashda xatolik',
+        close: 'Yopish',
+        viewStats: 'Statistikani ko\'rish',
         noUsers: 'Foydalanuvchilar topilmadi'
     },
     auth: {
@@ -733,6 +769,8 @@ const ru: Translations = {
         purchase: 'Купить',
         owned: 'Принадлежит',
         apply: 'Применить',
+        active: 'Активно',
+        free: 'Бесплатно',
         notEnoughCoins: 'Недостаточно монет',
         purchaseSuccess: 'Покупка успешна',
         applySuccess: 'Тема успешно применена',
@@ -763,6 +801,16 @@ const ru: Translations = {
         totalCoins: 'Всего монет',
         streak: 'Серия',
         totalWorkouts: 'Всего тренировок',
+        totalExercises: 'Всего упражнений',
+        totalCalories: 'Всего калорий',
+        averageCaloriesPerDay: 'Средние калории в день',
+        dayStreak: 'Дневная серия',
+        lastWorkout: 'Последняя тренировка',
+        userStatistics: 'Статистика пользователя',
+        loadingStatistics: 'Загрузка статистики...',
+        failedToLoadStats: 'Не удалось загрузить статистику',
+        close: 'Закрыть',
+        viewStats: 'Посмотреть статистику',
         noUsers: 'Пользователи не найдены'
     },
     auth: {

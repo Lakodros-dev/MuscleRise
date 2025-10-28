@@ -82,12 +82,42 @@ export default memo(function Onboarding() {
     return (
       <div>
         <div className="grid gap-3">
-          <div className="flex gap-2">
-            <select value={choice} onChange={(e) => { const val = e.target.value; setChoice(val); const ex = availableExercises.find((a) => a.id === val); setQty(ex?.unit === "km" ? 1 : 10); }} className="flex-1 rounded-md bg-black/40 border border-white/10 px-3 py-2 font-semibold">
-              {availableExercises.map((a) => <option key={a.id} value={a.id}>{a.name} ({a.unit})</option>)}
-            </select>
-            <input type="number" min={1} value={qty} onChange={(e) => setQty(e.target.value)} className="w-28 rounded-md bg-black/40 border border-white/10 px-3 py-2" />
-            <button type="button" onClick={add} className="rounded-md bg-emerald-500 px-4 py-2 text-sm hover:bg-emerald-400 whitespace-nowrap">Add</button>
+          <div className="space-y-3">
+            <div>
+              <label className="block text-sm font-medium mb-1 text-white/80">Exercise</label>
+              <select
+                value={choice}
+                onChange={(e) => {
+                  const val = e.target.value;
+                  setChoice(val);
+                  const ex = availableExercises.find((a) => a.id === val);
+                  setQty(ex?.unit === "km" ? 1 : 10);
+                }}
+                className="w-full rounded-md bg-black/40 border border-white/10 px-3 py-2 font-semibold text-white"
+              >
+                {availableExercises.map((a) => <option key={a.id} value={a.id}>{a.name} ({a.unit})</option>)}
+              </select>
+            </div>
+
+            <div className="flex gap-3 items-end">
+              <div className="flex-1">
+                <label className="block text-sm font-medium mb-1 text-white/80">Repetitions</label>
+                <input
+                  type="number"
+                  min={1}
+                  value={qty}
+                  onChange={(e) => setQty(e.target.value)}
+                  className="w-full rounded-md bg-black/40 border border-white/10 px-3 py-2 text-white"
+                />
+              </div>
+              <button
+                type="button"
+                onClick={add}
+                className="rounded-md bg-emerald-500 px-6 py-2 text-sm hover:bg-emerald-400 whitespace-nowrap font-medium text-white"
+              >
+                Add Exercise
+              </button>
+            </div>
           </div>
 
           {localError && <div className="text-xs text-red-400">{localError}</div>}
@@ -219,7 +249,7 @@ export default memo(function Onboarding() {
   };
 
   return (
-    <div className="fixed inset-0 z-[200] grid place-items-center bg-black/90 p-4">
+    <div className="fixed inset-0 z-[9999] grid place-items-center bg-black/90 p-4">
       {!showWelcome ? (
         <div className="w-full max-w-md rounded-2xl bg-neutral-900 border border-white/10 p-6 shadow-2xl">
           <h2 className="text-xl font-bold mb-1">MuscleRise</h2>
@@ -274,6 +304,9 @@ export default memo(function Onboarding() {
                     {state.workoutPlans.map((p) => (
                       <option key={p.id} value={p.id}>{p.name}</option>
                     ))}
+                    {selectedExercises.length > 0 && (
+                      <option value="custom">Custom Plan ({selectedExercises.length} exercises)</option>
+                    )}
                     <option value="make-yourself">Make yourself</option>
                   </select>
                 </div>
@@ -282,8 +315,8 @@ export default memo(function Onboarding() {
 
               {/* Make Yourself Modal */}
               {showMakeYourself && (
-                <div className="fixed inset-0 z-[210] grid place-items-center bg-black/90 p-4">
-                  <div className="w-full max-w-2xl max-h-[95vh] overflow-y-auto rounded-2xl bg-neutral-900 border border-white/10 p-6 shadow-2xl" style={{ overflowX: 'hidden' }}>
+                <div className="fixed inset-0 z-[9998] grid place-items-center bg-black/90 p-4">
+                  <div className="w-full max-w-4xl max-h-[95vh] overflow-y-auto rounded-2xl bg-neutral-900 border border-white/10 p-6 shadow-2xl" style={{ overflowX: 'hidden' }}>
                     <h3 className="text-xl font-semibold mb-2">Make yourself — choose exercises</h3>
                     <p className="text-sm text-foreground/70 mb-4">Select up to 5 exercises and set repetitions/distances.</p>
 
