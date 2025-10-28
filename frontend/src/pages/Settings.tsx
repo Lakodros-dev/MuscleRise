@@ -1,4 +1,5 @@
 import { useState, useEffect, memo, useCallback, useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAppState } from "@/state/app-state";
 import Layout from "../components/Layout";
 import { UserProfile } from "@/state/app-state";
@@ -7,6 +8,7 @@ import { useTranslationWithState, languageOptions, translatePlanName } from "@/l
 const Settings = memo(function Settings() {
   const { state, dispatch } = useAppState();
   const { t } = useTranslationWithState(state.language);
+  const navigate = useNavigate();
 
   // Defensive check for state
   if (!state) {
@@ -131,11 +133,9 @@ const Settings = memo(function Settings() {
     localStorage.removeItem('authToken');
     localStorage.removeItem('mr_app_state_v1');
 
-    // Navigate to home page and show auth modal
-    setTimeout(() => {
-      window.location.href = '/';
-    }, 100);
-  }, [dispatch]);
+    // Navigate to home page using React Router
+    navigate('/', { replace: true });
+  }, [dispatch, navigate]);
 
   const handleAvatarSave = useCallback(async () => {
     const trimmedUrl = newAvatarUrl.trim();
