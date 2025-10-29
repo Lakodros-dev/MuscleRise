@@ -357,12 +357,18 @@ const Layout = memo(function Layout({ children }: { children: React.ReactNode })
 
   return (
     <div className="min-h-screen text-foreground relative" style={backgroundStyle} data-theme={state.theme.skin}>
-      {/* Transition overlay effect */}
+      {/* Enhanced transition overlay effect */}
       <motion.div
-        className="fixed inset-0 bg-black/10 z-[1] pointer-events-none"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: isTransitioning ? 1 : 0 }}
-        transition={{ duration: 0.3 }}
+        className="fixed inset-0 bg-gradient-to-r from-black/5 via-primary/5 to-black/5 z-[1] pointer-events-none"
+        initial={{ opacity: 0, scale: 1.1 }}
+        animate={{
+          opacity: isTransitioning ? 1 : 0,
+          scale: isTransitioning ? 1 : 1.1
+        }}
+        transition={{
+          duration: 0.4,
+          ease: "easeInOut"
+        }}
       />
       <MRNavbar />
 
@@ -373,30 +379,34 @@ const Layout = memo(function Layout({ children }: { children: React.ReactNode })
             initial={{
               x: isForward ? "100%" : "-100%",
               opacity: 0,
-              scale: 0.95,
-              filter: "blur(10px)"
+              scale: 0.92,
+              filter: "blur(8px)",
+              rotateY: isForward ? 15 : -15
             }}
             animate={{
               x: 0,
               opacity: 1,
               scale: 1,
-              filter: "blur(0px)"
+              filter: "blur(0px)",
+              rotateY: 0
             }}
             exit={{
               x: isForward ? "-100%" : "100%",
               opacity: 0,
-              scale: 0.95,
-              filter: "blur(10px)"
+              scale: 0.92,
+              filter: "blur(8px)",
+              rotateY: isForward ? -15 : 15
             }}
             transition={{
               type: "spring",
-              stiffness: 300,
-              damping: 30,
-              mass: 0.8,
-              duration: 0.6,
-              opacity: { duration: 0.3 },
-              scale: { duration: 0.4 },
-              filter: { duration: 0.3 }
+              stiffness: 280,
+              damping: 25,
+              mass: 0.7,
+              duration: 0.7,
+              opacity: { duration: 0.4, ease: "easeInOut" },
+              scale: { duration: 0.5, ease: "easeOut" },
+              filter: { duration: 0.4, ease: "easeInOut" },
+              rotateY: { duration: 0.6, ease: "easeInOut" }
             }}
             onAnimationStart={() => setIsTransitioning(true)}
             onAnimationComplete={() => setIsTransitioning(false)}
@@ -556,7 +566,22 @@ const Layout = memo(function Layout({ children }: { children: React.ReactNode })
 
               {usersLoading ? (
                 <div className="text-center py-4">
-                  <div className="text-sm text-foreground/70">Loading users...</div>
+                  <div className="flex items-center justify-center">
+                    <div className="relative mr-3">
+                      <div className="w-5 h-5 border-2 border-primary/30 border-t-primary rounded-full animate-spin"></div>
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="w-1 h-1 bg-primary rounded-full animate-pulse"></div>
+                      </div>
+                    </div>
+                    <span className="text-sm text-foreground/70">
+                      Loading users
+                      <span className="inline-flex space-x-1 ml-1">
+                        <span className="animate-bounce" style={{ animationDelay: '0ms' }}>.</span>
+                        <span className="animate-bounce" style={{ animationDelay: '150ms' }}>.</span>
+                        <span className="animate-bounce" style={{ animationDelay: '300ms' }}>.</span>
+                      </span>
+                    </span>
+                  </div>
                 </div>
               ) : (
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">

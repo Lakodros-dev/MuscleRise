@@ -4,6 +4,7 @@ import { useMemo, useState, useEffect, memo, useCallback } from "react";
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, BarChart, Bar } from "recharts";
 import { getWorkoutHistory, getTodayWorkoutStats } from "@/lib/api-utils";
 import { useTranslationWithState } from "@/lib/i18n";
+import { AnimatedDots } from "@/components/LoadingSpinner";
 
 const buildSeries = (history: { date: string; calories: number }[], days: number) => {
   const map = new Map(history.map((h) => [h.date, h.calories]));
@@ -205,7 +206,18 @@ const StatsPage = memo(function StatsPage() {
         <div className="rounded-xl border border-border bg-card p-4">
           <h3 className="text-lg font-semibold mb-3">{t.stats.todaysResults}</h3>
           {loading ? (
-            <div className="text-center text-foreground/50">Loading...</div>
+            <div className="flex items-center justify-center py-4">
+              <div className="relative mr-3">
+                <div className="w-5 h-5 border-2 border-primary/30 border-t-primary rounded-full animate-spin"></div>
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="w-1 h-1 bg-primary rounded-full animate-pulse"></div>
+                </div>
+              </div>
+              <span className="text-foreground/50">
+                Loading
+                <AnimatedDots />
+              </span>
+            </div>
           ) : (
             <div className="grid grid-cols-2 gap-4">
               <div className="text-center">
@@ -233,7 +245,18 @@ const StatsPage = memo(function StatsPage() {
         <div className="rounded-xl border border-border bg-card p-4">
           <h3 className="text-lg font-semibold mb-3">{t.stats.yesterdaysResults}</h3>
           {loading ? (
-            <div className="text-center text-foreground/50">{t.common.loading}</div>
+            <div className="flex items-center justify-center py-4">
+              <div className="relative mr-3">
+                <div className="w-5 h-5 border-2 border-primary/30 border-t-primary rounded-full animate-spin"></div>
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="w-1 h-1 bg-primary rounded-full animate-pulse"></div>
+                </div>
+              </div>
+              <span className="text-foreground/50">
+                {t.common.loading}
+                <AnimatedDots />
+              </span>
+            </div>
           ) : (
             <div className="grid grid-cols-2 gap-4">
               <div className="text-center">

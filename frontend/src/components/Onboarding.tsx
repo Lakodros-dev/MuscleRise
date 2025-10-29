@@ -2,6 +2,7 @@ import { useEffect, useState, memo } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppState } from "@/state/app-state";
 import { PasswordInput } from "@/components/ui/password-input";
+import { AuthLoader } from "@/components/LoadingSpinner";
 
 export default memo(function Onboarding() {
   const { state, dispatch } = useAppState();
@@ -22,6 +23,7 @@ export default memo(function Onboarding() {
   const [showMakeYourself, setShowMakeYourself] = useState(false);
   const [selectedExercises, setSelectedExercises] = useState<any[]>([]);
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [isLoading, setIsLoading] = useState(false);
 
   const availableExercises = [
     { id: "push-up", name: "Push up", unit: "reps" },
@@ -171,6 +173,7 @@ export default memo(function Onboarding() {
       return;
     }
     setErrors({});
+    setIsLoading(true);
 
     try {
       const { registerUser } = await import("@/lib/api-utils");
@@ -194,6 +197,7 @@ export default memo(function Onboarding() {
         } else {
           setErrors({ general: msg });
         }
+        setIsLoading(false);
         return;
       }
 
@@ -201,12 +205,14 @@ export default memo(function Onboarding() {
       dispatch({ type: "HYDRATE", payload: { user: response.data?.user } });
       dispatch({ type: "SELECT_PLAN", payload: { planId: form.planId } });
       try { localStorage.setItem("mr_app_state_v1", JSON.stringify({ ...state, user: response.data?.user })); } catch (e) { }
+      setIsLoading(false);
       setShowWelcome(true);
       // navigate to home to load app with user
       navigate("/", { replace: true });
     } catch (err) {
       console.error(err);
       setErrors({ general: "Unexpected error" });
+      setIsLoading(false);
     }
   };
 
@@ -217,6 +223,7 @@ export default memo(function Onboarding() {
     if (!form.password) newErrors.password = "Password is required";
     if (Object.keys(newErrors).length > 0) { setErrors(newErrors); return; }
     setErrors({});
+    setIsLoading(true);
 
     try {
       const { loginUser } = await import("@/lib/api-utils");
@@ -230,6 +237,7 @@ export default memo(function Onboarding() {
         } else {
           setErrors({ general: msg });
         }
+        setIsLoading(false);
         return;
       }
 
@@ -240,136 +248,145 @@ export default memo(function Onboarding() {
       try { localStorage.setItem("mr_app_state_v1", JSON.stringify({ ...state, user: response.data?.user })); } catch (e) { }
 
       // Show welcome screen
+      setIsLoading(false);
       setShowWelcome(true);
       navigate("/", { replace: true });
     } catch (err) {
       console.error(err);
       setErrors({ general: "Unexpected error" });
+      setIsLoading(false);
     }
   };
 
   return (
-    <div className="fixed inset-0 z-[9999] grid place-items-center bg-black/90 p-4">
-      {!showWelcome ? (
-        <div className="w-full max-w-md rounded-2xl bg-neutral-900 border border-white/10 p-6 shadow-2xl">
-          <h2 className="text-xl font-bold mb-1">MuscleRise</h2>
-          <p className="text-sm text-foreground/70 mb-4">{mode === "register" ? "Register and start your fitness journey." : "Log in to your account."}</p>
-
-          {mode === "register" ? (
-            <form onSubmit={register} className="grid gap-3">
-              <label className="grid gap-1">
-                <span className="text-xs text-foreground/70">Username</span>
-                <input className="rounded-md bg-black/40 border border-white/10 px-3 py-2 outline-none focus:ring-2 focus:ring-emerald-500" value={form.username} onChange={(e) => setForm({ ...form, username: e.target.value })} placeholder="username" required />
-                {errors.username && <div className="text-xs text-red-400">{errors.username}</div>}
-              </label>
-
-              <label className="grid gap-1">
-                <span className="text-xs text-foreground/70">Password</span>
-                <PasswordInput className="rounded-md bg-black/40 border border-white/10 px-3 py-2 outline-none focus:ring-2 focus:ring-emerald-500" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} placeholder="password" required />
-                {errors.password && <div className="text-xs text-red-400">{errors.password}</div>}
-              </label>
-
-
-              <div className="grid grid-cols-2 gap-3">
-                <label className="grid gap-1">
-                  <span className="text-xs text-foreground/70">Weight (kg)</span>
-                  <input type="number" min={1} className="rounded-md bg-black/40 border border-white/10 px-3 py-2 outline-none focus:ring-2 focus:ring-emerald-500" value={form.weightKg} onChange={(e) => setForm({ ...form, weightKg: e.target.value })} placeholder="70" required />
-                  {errors.weightKg && <div className="text-xs text-red-400">{errors.weightKg}</div>}
-                </label>
-
-                <label className="grid gap-1">
-                  <span className="text-xs text-foreground/70">Height (cm)</span>
-                  <input type="number" min={1} className="rounded-md bg-black/40 border border-white/10 px-3 py-2 outline-none focus:ring-2 focus:ring-emerald-500" value={form.heightCm} onChange={(e) => setForm({ ...form, heightCm: e.target.value })} placeholder="170" required />
-                  {errors.heightCm && <div className="text-xs text-red-400">{errors.heightCm}</div>}
-                </label>
-              </div>
-
-              <label className="grid gap-1">
-                <span className="text-xs text-foreground/70">Avatar URL (optional)</span>
-                <input className="rounded-md bg-black/40 border border-white/10 px-3 py-2 outline-none focus:ring-2 focus:ring-emerald-500" value={form.avatarUrl} onChange={(e) => setForm({ ...form, avatarUrl: e.target.value })} placeholder="https://...jpg" />
-              </label>
-
-              <label className="grid gap-1">
-                <span className="text-xs text-foreground/70">Choose a starter plan</span>
-                <div className="flex items-center gap-2">
-                  <select
-                    value={form.planId}
-                    onChange={(e) => {
-                      const v = e.target.value;
-                      setForm({ ...form, planId: v });
-                      if (v === "make-yourself") setShowMakeYourself(true);
-                    }}
-                    className="rounded-md bg-black/40 border border-white/10 px-4 py-2 pr-10 font-semibold"
-                  >
-                    {state.workoutPlans.map((p) => (
-                      <option key={p.id} value={p.id}>{p.name}</option>
-                    ))}
-                    {selectedExercises.length > 0 && (
-                      <option value="custom">Custom Plan ({selectedExercises.length} exercises)</option>
-                    )}
-                    <option value="make-yourself">Make yourself</option>
-                  </select>
-                </div>
-              </label>
-              {errors.planId && <div className="text-xs text-red-400 mt-1">{errors.planId}</div>}
-
-              {/* Make Yourself Modal */}
-              {showMakeYourself && (
-                <div className="fixed inset-0 z-[9998] grid place-items-center bg-black/90 p-4">
-                  <div className="w-full max-w-4xl max-h-[95vh] overflow-y-auto rounded-2xl bg-neutral-900 border border-white/10 p-6 shadow-2xl" style={{ overflowX: 'hidden' }}>
-                    <h3 className="text-xl font-semibold mb-2">Make yourself — choose exercises</h3>
-                    <p className="text-sm text-foreground/70 mb-4">Select up to 5 exercises and set repetitions/distances.</p>
-
-                    <MakeYourselfComponent
-                      availableExercises={availableExercises}
-                      onClose={() => setShowMakeYourself(false)}
-                      onSave={(selected) => {
-                        setSelectedExercises(selected);
-                        setShowMakeYourself(false);
-                        // set a custom plan id so registration knows
-                        setForm({ ...form, planId: "custom" });
-                      }}
-                    />
-
-                  </div>
-                </div>
-              )}
-
-              {errors.general && <div className="text-sm text-red-400 mb-2">{errors.general}</div>}
-              <div className="flex items-center justify-between">
-                <button type="submit" className="mt-2 rounded-md bg-gradient-to-r from-emerald-500 to-sky-500 px-4 py-2 font-semibold hover:from-emerald-400 hover:to-sky-400">Register</button>
-                <button type="button" onClick={() => setMode("login")} className="text-sm underline">Already have an account? Login</button>
-              </div>
-            </form>
-          ) : (
-            <form onSubmit={login} className="grid gap-3">
-              <label className="grid gap-1">
-                <span className="text-xs text-foreground/70">Username</span>
-                <input className="rounded-md bg-black/40 border border-white/10 px-3 py-2 outline-none focus:ring-2 focus:ring-emerald-500" value={form.username} onChange={(e) => setForm({ ...form, username: e.target.value })} placeholder="username" required />
-                {errors.username && <div className="text-xs text-red-400">{errors.username}</div>}
-              </label>
-
-              <label className="grid gap-1">
-                <span className="text-xs text-foreground/70">Password</span>
-                <PasswordInput className="rounded-md bg-black/40 border border-white/10 px-3 py-2 outline-none focus:ring-2 focus:ring-emerald-500" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} placeholder="password" required />
-                {errors.password && <div className="text-xs text-red-400">{errors.password}</div>}
-              </label>
-
-              {errors.general && <div className="text-sm text-red-400 mb-2">{errors.general}</div>}
-              <div className="flex items-center justify-between">
-                <button type="submit" className="mt-2 rounded-md bg-gradient-to-r from-emerald-500 to-sky-500 px-4 py-2 font-semibold hover:from-emerald-400 hover:to-sky-400">Login</button>
-                <button type="button" onClick={() => setMode("register")} className="text-sm underline">Don't have an account? Register</button>
-              </div>
-            </form>
-          )}
-        </div>
-      ) : (
-        <div className="w-full max-w-md rounded-2xl bg-neutral-900 border border-white/10 p-8 text-center shadow-2xl">
-          <h3 className="text-2xl font-extrabold bg-gradient-to-r from-emerald-400 to-sky-400 bg-clip-text text-transparent">Welcome!</h3>
-          <p className="mt-2 text-foreground/70">Ready for today's workout?</p>
-          <button onClick={() => setShowWelcome(false)} className="mt-6 rounded-md bg-white/10 px-4 py-2 hover:bg-white/15">Get started</button>
-        </div>
+    <>
+      {isLoading && (
+        <AuthLoader
+          message={mode === "register" ? "Creating your account..." : "Logging you in..."}
+        />
       )}
-    </div>
+      <div className="fixed inset-0 z-[9999] grid place-items-center bg-black/90 p-4">
+        {!showWelcome ? (
+          <div className="w-full max-w-md rounded-2xl bg-neutral-900 border border-white/10 p-6 shadow-2xl">
+            <h2 className="text-xl font-bold mb-1">MuscleRise</h2>
+            <p className="text-sm text-foreground/70 mb-4">{mode === "register" ? "Register and start your fitness journey." : "Log in to your account."}</p>
+
+            {mode === "register" ? (
+              <form onSubmit={register} className="grid gap-3">
+                <label className="grid gap-1">
+                  <span className="text-xs text-foreground/70">Username</span>
+                  <input className="rounded-md bg-black/40 border border-white/10 px-3 py-2 outline-none focus:ring-2 focus:ring-emerald-500" value={form.username} onChange={(e) => setForm({ ...form, username: e.target.value })} placeholder="username" required />
+                  {errors.username && <div className="text-xs text-red-400">{errors.username}</div>}
+                </label>
+
+                <label className="grid gap-1">
+                  <span className="text-xs text-foreground/70">Password</span>
+                  <PasswordInput className="rounded-md bg-black/40 border border-white/10 px-3 py-2 outline-none focus:ring-2 focus:ring-emerald-500" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} placeholder="password" required />
+                  {errors.password && <div className="text-xs text-red-400">{errors.password}</div>}
+                </label>
+
+
+                <div className="grid grid-cols-2 gap-3">
+                  <label className="grid gap-1">
+                    <span className="text-xs text-foreground/70">Weight (kg)</span>
+                    <input type="number" min={1} className="rounded-md bg-black/40 border border-white/10 px-3 py-2 outline-none focus:ring-2 focus:ring-emerald-500" value={form.weightKg} onChange={(e) => setForm({ ...form, weightKg: e.target.value })} placeholder="70" required />
+                    {errors.weightKg && <div className="text-xs text-red-400">{errors.weightKg}</div>}
+                  </label>
+
+                  <label className="grid gap-1">
+                    <span className="text-xs text-foreground/70">Height (cm)</span>
+                    <input type="number" min={1} className="rounded-md bg-black/40 border border-white/10 px-3 py-2 outline-none focus:ring-2 focus:ring-emerald-500" value={form.heightCm} onChange={(e) => setForm({ ...form, heightCm: e.target.value })} placeholder="170" required />
+                    {errors.heightCm && <div className="text-xs text-red-400">{errors.heightCm}</div>}
+                  </label>
+                </div>
+
+                <label className="grid gap-1">
+                  <span className="text-xs text-foreground/70">Avatar URL (optional)</span>
+                  <input className="rounded-md bg-black/40 border border-white/10 px-3 py-2 outline-none focus:ring-2 focus:ring-emerald-500" value={form.avatarUrl} onChange={(e) => setForm({ ...form, avatarUrl: e.target.value })} placeholder="https://...jpg" />
+                </label>
+
+                <label className="grid gap-1">
+                  <span className="text-xs text-foreground/70">Choose a starter plan</span>
+                  <div className="flex items-center gap-2">
+                    <select
+                      value={form.planId}
+                      onChange={(e) => {
+                        const v = e.target.value;
+                        setForm({ ...form, planId: v });
+                        if (v === "make-yourself") setShowMakeYourself(true);
+                      }}
+                      className="rounded-md bg-black/40 border border-white/10 px-4 py-2 pr-10 font-semibold"
+                    >
+                      {state.workoutPlans.map((p) => (
+                        <option key={p.id} value={p.id}>{p.name}</option>
+                      ))}
+                      {selectedExercises.length > 0 && (
+                        <option value="custom">Custom Plan ({selectedExercises.length} exercises)</option>
+                      )}
+                      <option value="make-yourself">Make yourself</option>
+                    </select>
+                  </div>
+                </label>
+                {errors.planId && <div className="text-xs text-red-400 mt-1">{errors.planId}</div>}
+
+                {/* Make Yourself Modal */}
+                {showMakeYourself && (
+                  <div className="fixed inset-0 z-[9998] grid place-items-center bg-black/90 p-4">
+                    <div className="w-full max-w-4xl max-h-[95vh] overflow-y-auto rounded-2xl bg-neutral-900 border border-white/10 p-6 shadow-2xl" style={{ overflowX: 'hidden' }}>
+                      <h3 className="text-xl font-semibold mb-2">Make yourself — choose exercises</h3>
+                      <p className="text-sm text-foreground/70 mb-4">Select up to 5 exercises and set repetitions/distances.</p>
+
+                      <MakeYourselfComponent
+                        availableExercises={availableExercises}
+                        onClose={() => setShowMakeYourself(false)}
+                        onSave={(selected) => {
+                          setSelectedExercises(selected);
+                          setShowMakeYourself(false);
+                          // set a custom plan id so registration knows
+                          setForm({ ...form, planId: "custom" });
+                        }}
+                      />
+
+                    </div>
+                  </div>
+                )}
+
+                {errors.general && <div className="text-sm text-red-400 mb-2">{errors.general}</div>}
+                <div className="flex items-center justify-between">
+                  <button type="submit" className="mt-2 rounded-md bg-gradient-to-r from-emerald-500 to-sky-500 px-4 py-2 font-semibold hover:from-emerald-400 hover:to-sky-400">Register</button>
+                  <button type="button" onClick={() => setMode("login")} className="text-sm underline">Already have an account? Login</button>
+                </div>
+              </form>
+            ) : (
+              <form onSubmit={login} className="grid gap-3">
+                <label className="grid gap-1">
+                  <span className="text-xs text-foreground/70">Username</span>
+                  <input className="rounded-md bg-black/40 border border-white/10 px-3 py-2 outline-none focus:ring-2 focus:ring-emerald-500" value={form.username} onChange={(e) => setForm({ ...form, username: e.target.value })} placeholder="username" required />
+                  {errors.username && <div className="text-xs text-red-400">{errors.username}</div>}
+                </label>
+
+                <label className="grid gap-1">
+                  <span className="text-xs text-foreground/70">Password</span>
+                  <PasswordInput className="rounded-md bg-black/40 border border-white/10 px-3 py-2 outline-none focus:ring-2 focus:ring-emerald-500" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} placeholder="password" required />
+                  {errors.password && <div className="text-xs text-red-400">{errors.password}</div>}
+                </label>
+
+                {errors.general && <div className="text-sm text-red-400 mb-2">{errors.general}</div>}
+                <div className="flex items-center justify-between">
+                  <button type="submit" className="mt-2 rounded-md bg-gradient-to-r from-emerald-500 to-sky-500 px-4 py-2 font-semibold hover:from-emerald-400 hover:to-sky-400">Login</button>
+                  <button type="button" onClick={() => setMode("register")} className="text-sm underline">Don't have an account? Register</button>
+                </div>
+              </form>
+            )}
+          </div>
+        ) : (
+          <div className="w-full max-w-md rounded-2xl bg-neutral-900 border border-white/10 p-8 text-center shadow-2xl">
+            <h3 className="text-2xl font-extrabold bg-gradient-to-r from-emerald-400 to-sky-400 bg-clip-text text-transparent">Welcome!</h3>
+            <p className="mt-2 text-foreground/70">Ready for today's workout?</p>
+            <button onClick={() => setShowWelcome(false)} className="mt-6 rounded-md bg-white/10 px-4 py-2 hover:bg-white/15">Get started</button>
+          </div>
+        )}
+      </div>
+    </>
   );
 });

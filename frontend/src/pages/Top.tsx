@@ -2,6 +2,7 @@ import Layout from "@/components/Layout";
 import { useAppState } from "@/state/app-state";
 import { useState, useEffect } from "react";
 import { useTranslationWithState } from "@/lib/i18n";
+import { AnimatedDots } from "@/components/LoadingSpinner";
 
 interface LeaderboardUser {
   id: string;
@@ -116,7 +117,18 @@ export default function TopPage() {
 
         {loading ? (
           <div className="rounded-xl border border-border bg-card p-8 text-center">
-            <div className="text-foreground/70">Loading users...</div>
+            <div className="flex items-center justify-center">
+              <div className="relative mr-3">
+                <div className="w-6 h-6 border-2 border-primary/30 border-t-primary rounded-full animate-spin"></div>
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="w-1 h-1 bg-primary rounded-full animate-pulse"></div>
+                </div>
+              </div>
+              <span className="text-foreground/70">
+                Loading users
+                <AnimatedDots />
+              </span>
+            </div>
           </div>
         ) : error ? (
           <div className="rounded-xl border border-border bg-card p-8 text-center">
@@ -201,7 +213,18 @@ export default function TopPage() {
 
             {statsLoading ? (
               <div className="text-center py-8">
-                <div className="text-white/70">{t.top.loadingStatistics}</div>
+                <div className="flex items-center justify-center">
+                  <div className="relative mr-3">
+                    <div className="w-6 h-6 border-2 border-primary/30 border-t-primary rounded-full animate-spin"></div>
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="w-1 h-1 bg-primary rounded-full animate-pulse"></div>
+                    </div>
+                  </div>
+                  <span className="text-white/70">
+                    {t.top.loadingStatistics}
+                    <AnimatedDots />
+                  </span>
+                </div>
               </div>
             ) : userStats ? (
               <div className="space-y-4">

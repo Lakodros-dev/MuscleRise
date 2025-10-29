@@ -1,8 +1,8 @@
 import Layout from "@/components/Layout";
-import Avatar from "@/components/Avatar";
+
 import { useAppState } from "@/state/app-state";
 import { Link } from "react-router-dom";
-import { memo, useMemo, useCallback, useState, useEffect } from "react";
+import { memo, useMemo, useCallback, useEffect } from "react";
 import { useTranslationWithState, translateExerciseName, translatePlanName } from "@/lib/i18n";
 
 const Index = memo(function Index() {
